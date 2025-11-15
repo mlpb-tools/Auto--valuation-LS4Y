@@ -1,1421 +1,713 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LS4YOU - Mon Auto-Positionnement Life Skills 🚀</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Glacial+Indifference:wght@400;700&family=Nunito:wght@300;400;500;600;700;800&display=swap');
-        
-        :root {
-            --rouge-principal: #E63946;
-            --jaune-accent: #FFD166;
-            --turquoise-accent: #06D6A0;
-            --gris-clair: #F5F5F5;
-            --gris-moyen: #CCCCCC;
-            --gris-fonce: #333333;
-            --noir-profond: #000000;
-            --blanc-pur: #FFFFFF;
-        }
-        
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: 
-                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%), 
-                linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.05) 75%), 
-                linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.05) 75%),
-                linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-            color: var(--noir-profond);
-            position: relative;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(230, 57, 70, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(6, 214, 160, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 209, 102, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Glacial Indifference', sans-serif;
-            font-weight: 700;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-        
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .progress-bar {
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .level-dot {
-            width: 50px;
-            height: 50px;
-            border-radius: 0;
-            border: 4px solid var(--noir-profond);
-            background: var(--blanc-pur);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 800;
-            font-family: 'Glacial Indifference', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--noir-profond);
-            line-height: 1;
-            position: relative;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-        }
-        
-        .level-dot:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.8);
-            background: var(--jaune-accent);
-        }
-        
-        .level-dot.selected {
-            background: var(--rouge-principal);
-            color: var(--blanc-pur);
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.8);
-        }
-        
-        .skill-card {
-            background: var(--blanc-pur);
-            border-radius: 0;
-            padding: 32px;
-            border: 4px solid var(--noir-profond);
-            transition: all 0.3s ease;
-            position: relative;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
-        }
-        
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            background: linear-gradient(45deg, var(--rouge-principal), var(--turquoise-accent));
-            z-index: -1;
-            border-radius: 0;
-        }
-        
-        .skill-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px rgba(0,0,0,0.8);
-        }
-        
-        .nav-button {
-            padding: 16px 32px;
-            border-radius: 0;
-            font-weight: 800;
-            font-size: 18px;
-            font-family: 'Glacial Indifference', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 4px solid var(--noir-profond);
-            position: relative;
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.8);
-        }
-        
-        .nav-button:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 9px 9px 0px rgba(0,0,0,0.8);
-        }
-        
-        .nav-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 6px 6px 0px rgba(0,0,0,0.3);
-        }
-        
-        .progress-indicator {
-            height: 12px;
-            background: var(--gris-moyen);
-            border-radius: 0;
-            overflow: hidden;
-            border: 2px solid var(--noir-profond);
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--rouge-principal), var(--turquoise-accent));
-            transition: width 0.5s ease;
-            position: relative;
-        }
-        
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 2px,
-                rgba(255,255,255,0.2) 2px,
-                rgba(255,255,255,0.2) 4px
-            );
-        }
-        
-        .page-indicator {
-            width: 16px;
-            height: 16px;
-            border-radius: 0;
-            background: var(--gris-moyen);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid var(--noir-profond);
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
-        }
-        
-        .page-indicator.active {
-            background: var(--rouge-principal);
-            transform: translate(-1px, -1px);
-            box-shadow: 3px 3px 0px rgba(0,0,0,0.8);
-        }
-        
-        .category-header {
-            background: var(--blanc-pur);
-            border: 4px solid var(--noir-profond);
-            border-radius: 0;
-            padding: 32px;
-            margin-bottom: 32px;
-            position: relative;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
-        }
-        
-        .category-header::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
-            background: linear-gradient(135deg, var(--rouge-principal), var(--turquoise-accent));
-            z-index: -1;
-        }
-        
-        .category-header::after {
-            content: '';
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 20px;
-            height: 20px;
-            background: var(--jaune-accent);
-            border: 2px solid var(--noir-profond);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>LS4YOU – Bilan Life Skills & Ressources</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Nunito:wght@400;600;700&display=swap");
+
+    :root {
+      --orange: #f39200;
+      --vert: #95c11f;
+      --bleu: #2897d5;
+      --rose: #d60b52;
+      --violet: #a3195b;
+      --rouge: #9f3d3f;
+      --noir: #171718;
+      --bg: #f5f5f7;
+    }
+
+    body {
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 0 0, #ffffff 0, #f7f7fb 35%, #ececf4 100%);
+      color: var(--noir);
+    }
+
+    h1, h2, h3 {
+      font-family: "Poppins", system-ui, sans-serif;
+    }
+
+    .card {
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .chip {
+      border-radius: 999px;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      background: #f1f5f9;
+    }
+
+    .scale-dot {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    .scale-dot:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+      border-color: var(--bleu);
+    }
+
+    .scale-dot.selected {
+      background: var(--bleu);
+      color: #fff;
+      border-color: var(--bleu);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.45);
+    }
+
+    .scale-label {
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+
+    .domain-pill {
+      border-radius: 999px;
+      padding: 0.24rem 0.7rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .progress-bar {
+      height: 0.8rem;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--bleu), var(--rose));
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .step-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      transition: all 0.2s ease;
+    }
+
+    .step-dot.active {
+      background: var(--bleu);
+      transform: scale(1.3);
+    }
+
+    .tag-weak {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .tag-ok {
+      background: #fffbeb;
+      color: #92400e;
+    }
+
+    .tag-strong {
+      background: #ecfdf5;
+      color: #166534;
+    }
+
+    @media (max-width: 768px) {
+      .question-layout {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 <body class="min-h-screen">
-    <div class="container mx-auto px-4 py-6 max-w-4xl">
-        <!-- Header fixe -->
-        <div class="text-center mb-8">
-            <div class="floating mb-4">
-                <h1 class="text-5xl md:text-7xl font-bold mb-4 relative inline-block" style="color: var(--rouge-principal); transform: rotate(-2deg);">
-                    <span class="relative z-10">🚀 LS4YOU</span>
-                    <div class="absolute inset-0 bg-yellow-300 transform rotate-1 -z-10" style="background: var(--jaune-accent); margin: 4px;"></div>
-                    <div class="absolute inset-0 border-4 border-black transform -rotate-1" style="margin: -4px;"></div>
-                </h1>
-                <p class="text-xl font-bold uppercase tracking-wider" style="color: var(--noir-profond); font-family: 'Glacial Indifference', sans-serif;">Mon Auto-Positionnement Life Skills</p>
-            </div>
-            
-            <!-- Barre de progression globale -->
-            <div class="bg-white p-6 shadow-lg mb-6 border-4 border-black relative" style="box-shadow: 6px 6px 0px rgba(0,0,0,0.8);">
-                <div class="absolute -top-2 -left-2 w-8 h-8 bg-turquoise border-2 border-black" style="background: var(--turquoise-accent);"></div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-sm font-bold uppercase tracking-wide" style="color: var(--noir-profond); font-family: 'Glacial Indifference', sans-serif;">Progression globale</span>
-                    <span id="globalProgress" class="text-lg font-bold" style="color: var(--rouge-principal); font-family: 'Glacial Indifference', sans-serif;">0/13</span>
-                </div>
-                <div class="progress-indicator">
-                    <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
-                </div>
-            </div>
-            
-            <!-- Indicateurs de pages -->
-            <div class="flex justify-center gap-3 mb-6">
-                <div class="page-indicator active" data-page="0" title="Accueil"></div>
-                <div class="page-indicator" data-page="1" title="Valorisation"></div>
-                <div class="page-indicator" data-page="2" title="Connaissance"></div>
-                <div class="page-indicator" data-page="3" title="Résilience"></div>
-                <div class="page-indicator" data-page="4" title="Finances"></div>
-                <div class="page-indicator" data-page="5" title="Résultats"></div>
-            </div>
+
+  <div class="max-w-5xl mx-auto px-4 py-6 md:py-10">
+    <!-- Header -->
+    <header class="mb-6 md:mb-10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white shadow-sm border border-slate-100 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">Mission Locale Pays Basque</span>
+            <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+            <span class="text-xs text-slate-500">LS4YOU – Life Skills</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold text-slate-900">
+            Bilan Life Skills & ressources d’orientation
+          </h1>
+          <p class="mt-2 text-sm md:text-base text-slate-600 max-w-2xl">
+            Un outil commun <span class="font-semibold">jeune / conseiller</span> pour repérer les forces,
+            les besoins et les ressources à mobiliser dans le cadre du <span class="font-semibold">CEP</span>.
+          </p>
         </div>
-
-        <!-- Page 0: Accueil -->
-        <div class="page active" id="page-0">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold mb-6" style="color: var(--rouge-principal);">
-                    Bienvenue dans ton auto-évaluation ! 🎯
-                </h2>
-                <p class="text-lg text-gray-700 mb-8 leading-relaxed">
-                    Tu vas découvrir tes compétences dans <strong>4 domaines clés</strong> de la vie.<br>
-                    Pour chaque situation, choisis le niveau qui te correspond le mieux.
-                </p>
-            </div>
-            
-            <!-- Légende des niveaux -->
-            <div class="bg-black text-white p-8 mb-8 border-4 border-black relative" style="box-shadow: 8px 8px 0px var(--rouge-principal);">
-                <div class="absolute -top-4 -right-4 w-12 h-12 border-4 border-black" style="background: var(--jaune-accent);"></div>
-                <h3 class="text-3xl font-bold mb-8 text-center uppercase tracking-wider" style="font-family: 'Glacial Indifference', sans-serif;">🎯 Les 4 réponses</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                    <div class="bg-white text-black p-6 border-4 border-white relative" style="box-shadow: 4px 4px 0px var(--rouge-principal);">
-                        <div class="text-4xl mb-4">😰</div>
-                        <div class="font-bold text-lg uppercase" style="font-family: 'Glacial Indifference', sans-serif;">Réponse 1</div>
-                        <div class="text-sm mt-2 font-semibold">Perdu / Évitant</div>
-                    </div>
-                    <div class="bg-white text-black p-6 border-4 border-white relative" style="box-shadow: 4px 4px 0px var(--jaune-accent);">
-                        <div class="text-4xl mb-4">🤔</div>
-                        <div class="font-bold text-lg uppercase" style="font-family: 'Glacial Indifference', sans-serif;">Réponse 2</div>
-                        <div class="text-sm mt-2 font-semibold">Observateur / Apprenti</div>
-                    </div>
-                    <div class="bg-white text-black p-6 border-4 border-white relative" style="box-shadow: 4px 4px 0px var(--turquoise-accent);">
-                        <div class="text-4xl mb-4">💪</div>
-                        <div class="font-bold text-lg uppercase" style="font-family: 'Glacial Indifference', sans-serif;">Réponse 3</div>
-                        <div class="text-sm mt-2 font-semibold">Lucide / Organisé</div>
-                    </div>
-                    <div class="bg-white text-black p-6 border-4 border-white relative" style="box-shadow: 4px 4px 0px var(--noir-profond);">
-                        <div class="text-4xl mb-4">🌟</div>
-                        <div class="font-bold text-lg uppercase" style="font-family: 'Glacial Indifference', sans-serif;">Réponse 4</div>
-                        <div class="text-sm mt-2 font-semibold">Expert / Stratégique</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Aperçu des catégories -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white p-6 border-4 border-black relative" style="box-shadow: 6px 6px 0px var(--rouge-principal);">
-                    <div class="absolute -top-2 -right-2 w-6 h-6 border-2 border-black" style="background: var(--rouge-principal);"></div>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide" style="color: var(--rouge-principal); font-family: 'Glacial Indifference', sans-serif;">
-                        ✨ Valorisation de soi
-                    </h3>
-                    <p class="text-gray-800 font-medium">Comment tu te présentes et valorises tes qualités</p>
-                </div>
-                <div class="bg-white p-6 border-4 border-black relative" style="box-shadow: 6px 6px 0px var(--jaune-accent);">
-                    <div class="absolute -top-2 -right-2 w-6 h-6 border-2 border-black" style="background: var(--jaune-accent);"></div>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide" style="color: var(--rouge-principal); font-family: 'Glacial Indifference', sans-serif;">
-                        🧠 Connaissance de soi
-                    </h3>
-                    <p class="text-gray-800 font-medium">Ta capacité à te connaître et définir tes objectifs</p>
-                </div>
-                <div class="bg-white p-6 border-4 border-black relative" style="box-shadow: 6px 6px 0px var(--turquoise-accent);">
-                    <div class="absolute -top-2 -right-2 w-6 h-6 border-2 border-black" style="background: var(--turquoise-accent);"></div>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide" style="color: var(--rouge-principal); font-family: 'Glacial Indifference', sans-serif;">
-                        🌱 Résilience & équilibre
-                    </h3>
-                    <p class="text-gray-800 font-medium">Ta capacité à rebondir et prendre soin de toi</p>
-                </div>
-                <div class="bg-white p-6 border-4 border-black relative" style="box-shadow: 6px 6px 0px var(--noir-profond);">
-                    <div class="absolute -top-2 -right-2 w-6 h-6 border-2 border-black" style="background: var(--noir-profond);"></div>
-                    <h3 class="text-xl font-bold mb-3 uppercase tracking-wide" style="color: var(--rouge-principal); font-family: 'Glacial Indifference', sans-serif;">
-                        💰 Finances & autonomie
-                    </h3>
-                    <p class="text-gray-800 font-medium">Ta relation avec l'argent et la gestion financière</p>
-                </div>
-            </div>
-            
-            <div class="text-center">
-                <button class="nav-button text-white" style="background-color: var(--rouge-principal);" onclick="goToPage(1)">
-                    Commencer l'évaluation 🚀
-                </button>
-            </div>
+        <div class="card px-4 py-3 flex flex-col gap-2 md:w-64">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Questions répondues
+            </span>
+            <span id="progress-counter" class="text-sm font-semibold text-slate-900">
+              0 / 50
+            </span>
+          </div>
+          <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+          <div class="flex items-center justify-between text-[0.7rem] text-slate-500">
+            <span>Pour le jeune</span>
+            <span>Pour le conseiller</span>
+          </div>
         </div>
+      </div>
+    </header>
 
-        <!-- Page 1: Valorisation -->
-        <div class="page" id="page-1">
-            <div class="category-header">
-                <h2 class="text-3xl font-bold mb-2 flex items-center" style="color: var(--rouge-principal);">
-                    ✨ Valorisation de soi
-                </h2>
-                <p class="text-lg text-gray-700">Comment tu te présentes et valorises tes qualités</p>
-            </div>
-            
-            <div class="space-y-8">
-                <!-- Skill 1 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        💬 Quand on me félicite
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai du mal à accepter les compliments</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je commence à reconnaître mes efforts</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'accepte mes qualités avec confiance</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'aide aussi les autres à se valoriser</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="image-moi" data-level="1">1</div>
-                        <div class="level-dot" data-skill="image-moi" data-level="2">2</div>
-                        <div class="level-dot" data-skill="image-moi" data-level="3">3</div>
-                        <div class="level-dot" data-skill="image-moi" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 2 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        📱 Sur les réseaux sociaux
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je ne réfléchis pas à ce que je montre</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je partage ce qui m'intéresse vraiment</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Mon profil correspond à qui je suis</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'adapte selon le réseau et le public</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="marque-perso" data-level="1">1</div>
-                        <div class="level-dot" data-skill="marque-perso" data-level="2">2</div>
-                        <div class="level-dot" data-skill="marque-perso" data-level="3">3</div>
-                        <div class="level-dot" data-skill="marque-perso" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 3 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        🎤 En entretien de stage
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai du mal à parler de mes qualités</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je prépare des exemples de ce que j'ai fait</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je présente mes points forts avec confiance</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'adapte mon discours à chaque personne</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="vendre-marque" data-level="1">1</div>
-                        <div class="level-dot" data-skill="vendre-marque" data-level="2">2</div>
-                        <div class="level-dot" data-skill="vendre-marque" data-level="3">3</div>
-                        <div class="level-dot" data-skill="vendre-marque" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 4 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        📖 Raconter un projet
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je liste les faits sans plus</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je raconte avec un début-milieu-fin</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Mon histoire captive et donne envie d'écouter</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Mon récit inspire et marque les esprits</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="storytelling" data-level="1">1</div>
-                        <div class="level-dot" data-skill="storytelling" data-level="2">2</div>
-                        <div class="level-dot" data-skill="storytelling" data-level="3">3</div>
-                        <div class="level-dot" data-skill="storytelling" data-level="4">4</div>
-                    </div>
-                </div>
-            </div>
+    <!-- Main Card -->
+    <main class="card p-4 md:p-6">
+      <!-- Top info / steps -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4 md:mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-sm font-bold">
+            <span id="domain-index">1</span>/11
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Domaine en cours
+            </p>
+            <h2 id="domain-title" class="text-base md:text-lg font-semibold text-slate-900">
+              <!-- rempli en JS -->
+            </h2>
+          </div>
         </div>
-
-        <!-- Page 2: Connaissance -->
-        <div class="page" id="page-2">
-            <div class="category-header" style="background: linear-gradient(135deg, rgba(255, 209, 102, 0.2), rgba(255, 209, 102, 0.3)); border-color: rgba(255, 209, 102, 0.5);">
-                <h2 class="text-3xl font-bold mb-2 flex items-center" style="color: var(--rouge-principal);">
-                    🧠 Connaissance de soi
-                </h2>
-                <p class="text-lg text-gray-700">Ta capacité à te connaître et définir tes objectifs</p>
-            </div>
-            
-            <div class="space-y-8">
-                <!-- Skill 5 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        💪 Mes points forts/faibles
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je ne sais pas vraiment ce que je fais bien</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je commence à réfléchir sur moi</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je vois clairement mes forces et faiblesses</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai un plan pour me développer</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="forces-faiblesses" data-level="1">1</div>
-                        <div class="level-dot" data-skill="forces-faiblesses" data-level="2">2</div>
-                        <div class="level-dot" data-skill="forces-faiblesses" data-level="3">3</div>
-                        <div class="level-dot" data-skill="forces-faiblesses" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 6 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        ✨ Faire attention à mon image
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je parle pareil avec tout le monde</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'adapte ma façon de parler selon la personne</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je fais attention à mon apparence</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je maîtrise parfaitement les codes sociaux</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="conscient-image" data-level="1">1</div>
-                        <div class="level-dot" data-skill="conscient-image" data-level="2">2</div>
-                        <div class="level-dot" data-skill="conscient-image" data-level="3">3</div>
-                        <div class="level-dot" data-skill="conscient-image" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 7 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        🤔 Accepter les remarques
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je me défends et je trouve des excuses</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'écoute mais j'ai du mal à l'accepter</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'écoute calmement et j'en tire des leçons</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je transforme chaque remarque en progrès</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="recevoir-feedback" data-level="1">1</div>
-                        <div class="level-dot" data-skill="recevoir-feedback" data-level="2">2</div>
-                        <div class="level-dot" data-skill="recevoir-feedback" data-level="3">3</div>
-                        <div class="level-dot" data-skill="recevoir-feedback" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 8 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        🎯 Savoir ce que je veux
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je ne sais pas où je vais</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai des idées mais c'est encore flou</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai des objectifs clairs et un plan</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Ma vision correspond à mes valeurs profondes</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="objectifs-perso" data-level="1">1</div>
-                        <div class="level-dot" data-skill="objectifs-perso" data-level="2">2</div>
-                        <div class="level-dot" data-skill="objectifs-perso" data-level="3">3</div>
-                        <div class="level-dot" data-skill="objectifs-perso" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 9 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        🔥 Garder ma motivation
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai besoin qu'on me pousse pour agir</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Ça dépend de mon humeur du jour</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je continue même quand c'est difficile</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je motive aussi les autres autour de moi</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="motivation-perso" data-level="1">1</div>
-                        <div class="level-dot" data-skill="motivation-perso" data-level="2">2</div>
-                        <div class="level-dot" data-skill="motivation-perso" data-level="3">3</div>
-                        <div class="level-dot" data-skill="motivation-perso" data-level="4">4</div>
-                    </div>
-                </div>
-            </div>
+        <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1" id="step-dots">
+            <!-- rempli en JS -->
+          </div>
+          <span class="text-[0.7rem] text-slate-500 hidden md:inline">Parcours des 11 domaines</span>
         </div>
+      </div>
 
-        <!-- Page 3: Résilience -->
-        <div class="page" id="page-3">
-            <div class="category-header" style="background: linear-gradient(135deg, rgba(6, 214, 160, 0.1), rgba(6, 214, 160, 0.2)); border-color: rgba(6, 214, 160, 0.3);">
-                <h2 class="text-3xl font-bold mb-2 flex items-center" style="color: var(--rouge-principal);">
-                    🌱 Résilience & équilibre
-                </h2>
-                <p class="text-lg text-gray-700">Ta capacité à rebondir et prendre soin de toi</p>
-            </div>
-            
-            <div class="space-y-8">
-                <!-- Skill 10 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        💪 Rebondir après les échecs
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je fuis et j'évite de réessayer</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je cherche du soutien quand ça va mal</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'analyse mes erreurs pour mieux recommencer</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'aide les autres à surmonter leurs difficultés</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="resilience-mentale" data-level="1">1</div>
-                        <div class="level-dot" data-skill="resilience-mentale" data-level="2">2</div>
-                        <div class="level-dot" data-skill="resilience-mentale" data-level="3">3</div>
-                        <div class="level-dot" data-skill="resilience-mentale" data-level="4">4</div>
-                    </div>
-                </div>
+      <!-- Description domaine -->
+      <div class="mb-4 border border-dashed border-slate-200 rounded-2xl px-3.5 py-3 bg-slate-50">
+        <p id="domain-description" class="text-sm text-slate-700">
+          <!-- rempli en JS -->
+        </p>
+      </div>
 
-                <!-- Skill 11 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        ⚖️ Prendre soin de moi
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je néglige mon bien-être</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je commence à faire attention à mes besoins</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je trouve un bon équilibre travail-repos</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je suis un exemple pour mon entourage</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="equilibre-vie" data-level="1">1</div>
-                        <div class="level-dot" data-skill="equilibre-vie" data-level="2">2</div>
-                        <div class="level-dot" data-skill="equilibre-vie" data-level="3">3</div>
-                        <div class="level-dot" data-skill="equilibre-vie" data-level="4">4</div>
-                    </div>
-                </div>
+      <!-- Questions -->
+      <div id="questions-container" class="space-y-3 md:space-y-4 mb-6">
+        <!-- rempli en JS -->
+      </div>
 
-                <!-- Skill 12 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        😌 Gérer mon stress
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je panique et je ne contrôle rien</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je reconnais les signes de stress</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je maîtrise des techniques pour me calmer</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je reste serein et j'aide les autres</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="gestion-stress" data-level="1">1</div>
-                        <div class="level-dot" data-skill="gestion-stress" data-level="2">2</div>
-                        <div class="level-dot" data-skill="gestion-stress" data-level="3">3</div>
-                        <div class="level-dot" data-skill="gestion-stress" data-level="4">4</div>
-                    </div>
-                </div>
-            </div>
+      <!-- Légende échelle -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4">
+        <div class="flex items-center gap-2 text-[0.7rem] text-slate-500">
+          <span class="scale-dot !w-7 !h-7 !border-slate-300 cursor-default text-[0.75rem]">1</span>
+          <span>Pas du tout moi</span>
+          <span class="scale-dot !w-7 !h-7 !border-slate-300 cursor-default text-[0.75rem]">4</span>
+          <span>Tout à fait moi</span>
         </div>
-
-        <!-- Page 4: Finances -->
-        <div class="page" id="page-4">
-            <div class="category-header" style="background: linear-gradient(135deg, rgba(246, 246, 246, 0.8), rgba(246, 246, 246, 1)); border-color: rgba(0, 0, 0, 0.2);">
-                <h2 class="text-3xl font-bold mb-2 flex items-center" style="color: var(--rouge-principal);">
-                    💰 Finances & autonomie
-                </h2>
-                <p class="text-lg text-gray-700">Ta relation avec l'argent et la gestion financière</p>
-            </div>
-            
-            <div class="space-y-8">
-                <!-- Skill 13 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        💭 Ma relation avec l'argent
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Ça me stresse, je préfère éviter le sujet</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je sais que c'est important mais je n'ai pas de méthode</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je vois l'argent comme un outil pour mes projets</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je maîtrise complètement ma gestion financière</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="vision-argent" data-level="1">1</div>
-                        <div class="level-dot" data-skill="vision-argent" data-level="2">2</div>
-                        <div class="level-dot" data-skill="vision-argent" data-level="3">3</div>
-                        <div class="level-dot" data-skill="vision-argent" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 14 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        📊 Suivre mon budget
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je ne note rien de ce que je dépense</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je regarde mes comptes de temps en temps</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je suis précisément toutes mes entrées et sorties</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Je planifie mon budget et fais des prévisions</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="suivi-finances" data-level="1">1</div>
-                        <div class="level-dot" data-skill="suivi-finances" data-level="2">2</div>
-                        <div class="level-dot" data-skill="suivi-finances" data-level="3">3</div>
-                        <div class="level-dot" data-skill="suivi-finances" data-level="4">4</div>
-                    </div>
-                </div>
-
-                <!-- Skill 15 -->
-                <div class="skill-card">
-                    <h3 class="text-xl font-bold mb-4 text-center" style="color: var(--rouge-principal);">
-                        🐷 Économiser et prévoir
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                                <div class="font-semibold text-red-700 mb-2">Réponse 1</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">Ma situation financière est fragile</div>
-                            </div>
-                            <div class="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                                <div class="font-semibold text-orange-700 mb-2">Réponse 2</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'essaie d'économiser mais c'est irrégulier</div>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                                <div class="font-semibold text-green-700 mb-2">Réponse 3</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai constitué une réserve de sécurité</div>
-                            </div>
-                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                                <div class="font-semibold text-blue-700 mb-2">Réponse 4</div>
-                                <div class="text-sm" style="font-family: 'Inter', sans-serif;">J'ai une stratégie financière complète</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 justify-center">
-                        <div class="level-dot" data-skill="protection-financiere" data-level="1">1</div>
-                        <div class="level-dot" data-skill="protection-financiere" data-level="2">2</div>
-                        <div class="level-dot" data-skill="protection-financiere" data-level="3">3</div>
-                        <div class="level-dot" data-skill="protection-financiere" data-level="4">4</div>
-                    </div>
-                </div>
-            </div>
+        <div class="flex flex-wrap gap-1 text-[0.7rem]">
+          <span class="chip">Répondre spontanément</span>
+          <span class="chip">Le conseiller peut reformuler</span>
+          <span class="chip">Aucun jugement – juste un repère</span>
         </div>
+      </div>
 
-        <!-- Page 5: Résultats -->
-        <div class="page" id="page-5">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold mb-4" style="color: var(--rouge-principal);">
-                    📊 Ton Profil Life Skills
-                </h2>
-                <p class="text-lg text-gray-700">Découvre tes forces et tes axes de développement</p>
-            </div>
-            
-            <!-- Radar Chart -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg mb-8">
-                <h3 class="text-xl font-bold mb-6 text-center" style="color: var(--rouge-principal);">
-                    🕸️ Ta toile de compétences
-                </h3>
-                <div class="flex justify-center">
-                    <canvas id="radarChart" width="400" height="400"></canvas>
-                </div>
-            </div>
-            
-            <!-- Points forts et à améliorer -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div class="bg-green-50 rounded-2xl p-8 border-2 border-green-200">
-                    <h3 class="text-xl font-bold text-green-700 mb-6 flex items-center">
-                        💪 Tes points forts
-                    </h3>
-                    <div id="strengthsList" class="space-y-4"></div>
-                </div>
-                <div class="bg-orange-50 rounded-2xl p-8 border-2 border-orange-200">
-                    <h3 class="text-xl font-bold text-orange-700 mb-6 flex items-center">
-                        🎯 À développer en priorité
-                    </h3>
-                    <div id="improvementsList" class="space-y-4"></div>
-                </div>
-            </div>
-
-            <!-- Synthèse personnelle -->
-            <div class="bg-white rounded-2xl p-8 border-2 shadow-lg mb-8" style="border-color: var(--rouge-principal);">
-                <h3 class="text-2xl font-bold mb-6 flex items-center" style="color: var(--rouge-principal);">
-                    📝 Ce que je retiens de moi aujourd'hui
-                </h3>
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-noir mb-3">Mes 3 plus grandes forces :</label>
-                        <textarea 
-                            id="strengths" 
-                            class="w-full p-4 border-2 border-gray-200 rounded-xl resize-none focus:border-turquoise focus:outline-none" 
-                            rows="3"
-                            placeholder="Ex: Je suis à l'écoute des autres, j'ai une bonne créativité, je sais m'adapter..."></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-noir mb-3">Les 2 domaines que je veux développer en priorité :</label>
-                        <textarea 
-                            id="improvements" 
-                            class="w-full p-4 border-2 border-gray-200 rounded-xl resize-none focus:border-turquoise focus:outline-none" 
-                            rows="3"
-                            placeholder="Ex: Améliorer ma gestion du temps, développer ma confiance en moi..."></textarea>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-noir mb-3">Mon objectif principal pour les 3 prochains mois :</label>
-                        <textarea 
-                            id="goal" 
-                            class="w-full p-4 border-2 border-gray-200 rounded-xl resize-none focus:border-turquoise focus:outline-none" 
-                            rows="2"
-                            placeholder="Ex: Trouver un stage dans le domaine qui m'intéresse, améliorer ma communication..."></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Boutons d'action -->
-            <div class="flex flex-col sm:flex-row justify-center gap-6">
-                <button id="exportResults" class="nav-button text-white" style="background-color: var(--rouge-principal);">
-                    📊 Télécharger mon bilan
-                </button>
-                <button id="resetForm" class="nav-button" style="background-color: var(--gris-clair); color: var(--noir-profond);">
-                    🔄 Recommencer
-                </button>
-                <button id="shareResults" class="nav-button text-white" style="background-color: var(--turquoise-accent);">
-                    📱 Partager
-                </button>
-            </div>
+      <!-- Navigation -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <button id="prev-btn"
+                class="w-full md:w-auto inline-flex items-center justify-center gap-1 px-4 py-2.5 rounded-xl border border-slate-300 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed">
+          ← Domaine précédent
+        </button>
+        <div class="text-xs text-slate-500 text-center md:text-left">
+          Tu peux revenir en arrière à tout moment. Les réponses sont sauvegardées sur cette page.
         </div>
+        <button id="next-btn"
+                class="w-full md:w-auto inline-flex items-center justify-center gap-1 px-4 py-2.5 rounded-xl bg-slate-900 text-sm font-semibold text-white hover:bg-slate-800">
+          Domaine suivant →
+        </button>
+      </div>
 
-        <!-- Navigation -->
-        <div class="flex justify-between items-center mt-12">
-            <button id="prevBtn" class="nav-button" style="background-color: var(--gris-clair); color: var(--noir-profond);" disabled>
-                ← Précédent
-            </button>
-            <div class="text-center">
-                <span id="pageInfo" class="text-sm text-gray-600">Page 1 sur 6</span>
-            </div>
-            <button id="nextBtn" class="nav-button text-white" style="background-color: var(--rouge-principal);">
-                Suivant →
-            </button>
+      <!-- Bouton résultats -->
+      <div class="mt-6 border-t border-slate-100 pt-4 flex justify-end">
+        <button id="results-btn"
+                class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--bleu)] text-sm font-semibold text-white hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled>
+          Voir mon bilan complet 📊
+        </button>
+      </div>
+    </main>
+
+    <!-- Résultats -->
+    <section id="results-section" class="mt-8 hidden">
+      <div class="card p-4 md:p-6 mb-4">
+        <h2 class="text-lg md:text-xl font-bold text-slate-900 mb-1">
+          Bilan Life Skills & Ressources – Synthèse par domaine
+        </h2>
+        <p class="text-sm text-slate-600 mb-4">
+          Ce bilan n’est pas un jugement. C’est un support de dialogue entre le jeune et le conseiller
+          pour construire un <span class="font-semibold">plan d’actions CEP</span> réaliste et motivant.
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm border-t border-b border-slate-100">
+            <thead class="bg-slate-50">
+              <tr>
+                <th class="text-left px-3 py-2 font-semibold text-slate-600">Domaine</th>
+                <th class="text-left px-3 py-2 font-semibold text-slate-600">Score (1–4)</th>
+                <th class="text-left px-3 py-2 font-semibold text-slate-600">Lecture rapide</th>
+                <th class="text-left px-3 py-2 font-semibold text-slate-600">Pistes Life Skills & CEP</th>
+              </tr>
+            </thead>
+            <tbody id="results-table-body" class="divide-y divide-slate-100">
+              <!-- rempli en JS -->
+            </tbody>
+          </table>
         </div>
-    </div>
+      </div>
 
-    <script>
-        let currentPage = 0;
-        let skillLevels = {};
-        const totalPages = 6;
-        
-        // Skill categories mapping
-        const skillCategories = {
-            'image-moi': 1,
-            'marque-perso': 1,
-            'vendre-marque': 1,
-            'storytelling': 1,
-            'forces-faiblesses': 2,
-            'conscient-image': 2,
-            'recevoir-feedback': 2,
-            'objectifs-perso': 2,
-            'motivation-perso': 2,
-            'resilience-mentale': 3,
-            'equilibre-vie': 3,
-            'gestion-stress': 3,
-            'vision-argent': 4,
-            'suivi-finances': 4,
-            'protection-financiere': 4
-        };
-        
-        const skillNames = {
-            'image-moi': 'Quand on me félicite',
-            'marque-perso': 'Sur les réseaux sociaux',
-            'vendre-marque': 'En entretien de stage',
-            'storytelling': 'Raconter un projet',
-            'forces-faiblesses': 'Connaître mes points forts/faibles',
-            'conscient-image': 'Faire attention à mon image',
-            'recevoir-feedback': 'Accepter les remarques',
-            'objectifs-perso': 'Savoir ce que je veux',
-            'motivation-perso': 'Garder ma motivation',
-            'resilience-mentale': 'Rebondir après les échecs',
-            'equilibre-vie': 'Prendre soin de moi',
-            'gestion-stress': 'Gérer mon stress',
-            'vision-argent': 'Ma relation avec l\'argent',
-            'suivi-finances': 'Suivre mon budget',
-            'protection-financiere': 'Économiser et prévoir'
-        };
-        
-        // Navigation functions
-        function goToPage(pageNum) {
-            // Hide current page
-            document.getElementById(`page-${currentPage}`).classList.remove('active');
-            
-            // Show new page
-            currentPage = pageNum;
-            document.getElementById(`page-${currentPage}`).classList.add('active');
-            
-            // Update page indicators
-            document.querySelectorAll('.page-indicator').forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentPage);
-            });
-            
-            // Update navigation buttons
-            document.getElementById('prevBtn').disabled = currentPage === 0;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages - 1;
-            
-            // Update page info
-            document.getElementById('pageInfo').textContent = `Page ${currentPage + 1} sur ${totalPages}`;
-            
-            // Update next button text
-            const nextBtn = document.getElementById('nextBtn');
-            if (currentPage === totalPages - 2) {
-                nextBtn.textContent = 'Voir mes résultats 📊';
-            } else if (currentPage === totalPages - 1) {
-                nextBtn.style.display = 'none';
-            } else {
-                nextBtn.textContent = 'Suivant →';
-                nextBtn.style.display = 'block';
-            }
-            
-            // Update visualizations if on results page
-            if (currentPage === 5) {
-                updateVisualizations();
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="card p-4">
+          <h3 class="text-sm font-semibold text-slate-900 mb-2">Pour le jeune – Ce que je peux retenir</h3>
+          <p class="text-xs text-slate-600 mb-2">
+            Utilise ces phrases comme base d’échange avec ton conseiller :
+          </p>
+          <ul id="youth-summary" class="list-disc list-inside text-xs text-slate-700 space-y-1">
+            <!-- rempli en JS -->
+          </ul>
+        </div>
+        <div class="card p-4">
+          <h3 class="text-sm font-semibold text-slate-900 mb-2">Pour le conseiller – Repères pour le CEP</h3>
+          <p class="text-xs text-slate-600 mb-2">
+            Les scores ≤ 2,0 indiquent des domaines à approfondir et/ou à sécuriser dans le plan d’actions.
+          </p>
+          <ul id="counsellor-summary" class="list-disc list-inside text-xs text-slate-700 space-y-1">
+            <!-- rempli en JS -->
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // --- Configuration des domaines et questions ---
+    const domains = [
+      {
+        id: "emploi",
+        title: "Emploi – accès, posture, recherche",
+        color: "bg-sky-100 text-sky-800",
+        description:
+          "Comment tu te sens par rapport au monde du travail : te présenter, chercher un job, tenir un poste, interagir avec des employeurs.",
+        questions: [
+          "Je me sens capable d’expliquer clairement ce que je peux apporter à un employeur.",
+          "L’idée de passer un entretien d’embauche me met très mal à l’aise.",
+          "Je sais où chercher des offres d’emploi ou d’apprentissage qui m’intéressent.",
+          "Je suis à l’aise pour respecter des consignes et un cadre de travail.",
+          "Je sais demander de l’aide si je suis perdu au travail ou en stage."
+        ]
+      },
+      {
+        id: "formation",
+        title: "Formation – apprentissages, rythme, engagement",
+        color: "bg-amber-100 text-amber-900",
+        description:
+          "Ta capacité à entrer, suivre et tenir une formation (rythme, organisation, exigences, examens…).",
+        questions: [
+          "Je me vois capable de suivre une formation plusieurs semaines ou mois.",
+          "Je réussis à rester concentré(e) en cours ou en atelier.",
+          "Je sais demander des explications quand je ne comprends pas.",
+          "Je peux gérer le stress avant un examen, un contrôle ou une évaluation.",
+          "Je suis prêt(e) à m’engager sérieusement dans une formation si elle a du sens pour moi."
+        ]
+      },
+      {
+        id: "orientation",
+        title: "Orientation professionnelle – projet, cap, décisions",
+        color: "bg-violet-100 text-violet-900",
+        description:
+          "Où tu en es dans ton projet : envies, idées, choix, décisions, capacité à te projeter.",
+        questions: [
+          "J’ai au moins une idée de métier ou de domaine qui m’intéresse vraiment.",
+          "Je sais dire ce que j’aime et ce que je n’aime pas dans le travail ou les études.",
+          "Je prends en compte mes forces et mes limites quand je réfléchis à mon avenir.",
+          "Je me sens capable de faire des choix importants pour mon avenir, avec de l’aide si besoin.",
+          "Je vois à peu près les étapes pour avancer vers mon projet (même si tout n’est pas clair)."
+        ]
+      },
+      {
+        id: "mobilite",
+        title: "Mobilité – déplacements, autonomie, accès aux lieux",
+        color: "bg-emerald-100 text-emerald-900",
+        description:
+          "Comment tu te déplaces (transports, trajets, autonomie) pour accéder à l’emploi, la formation, les loisirs, les soins…",
+        questions: [
+          "Je peux me rendre sans trop de difficultés aux rendez-vous importants (Mission Locale, médecin, formation…).",
+          "Je connais les solutions de transport possibles autour de chez moi (bus, train, covoiturage…).",
+          "Je me sens à l’aise pour organiser un trajet dans un endroit que je ne connais pas.",
+          "Les questions de transport représentent un vrai frein pour certains projets qui m’intéressent.",
+          "Je sais à qui parler si j’ai un problème de permis, véhicule ou titres de transport."
+        ]
+      },
+      {
+        id: "sante",
+        title: "Santé physique & mentale – énergie, émotion, bien-être",
+        color: "bg-rose-100 text-rose-900",
+        description:
+          "Comment tu te sens dans ton corps et dans ta tête : sommeil, stress, émotions, énergie, santé globale.",
+        questions: [
+          "J’ai globalement un niveau d’énergie suffisant pour mes activités du quotidien.",
+          "Je repère quand mon stress ou mes émotions commencent à déborder.",
+          "Je connais au moins une ou deux choses qui m’aident à me calmer ou à me recentrer.",
+          "Je sais vers qui me tourner si je ne vais pas bien (pro, proche, structure…).",
+          "Ma santé (physique ou mentale) rend parfois difficile le fait de tenir des engagements (rdv, formation, travail…)."
+        ]
+      },
+      {
+        id: "logement",
+        title: "Logement & environnement de vie",
+        color: "bg-slate-100 text-slate-800",
+        description:
+          "Ton cadre de vie : logement, stabilité, environnement pour te poser, te reposer, travailler.",
+        questions: [
+          "Aujourd’hui, j’ai un endroit où je peux dormir en sécurité.",
+          "Mon environnement de vie me permet de me reposer correctement.",
+          "Mon logement / lieu de vie rend possible un projet de formation ou d’emploi.",
+          "Je sais vers qui me tourner si ma situation de logement devenait compliquée."
+        ]
+      },
+      {
+        id: "citoyennete",
+        title: "Citoyenneté, relations & participation",
+        color: "bg-indigo-100 text-indigo-900",
+        description:
+          "Ta place dans la société : relations avec les autres, participation, droits, engagement, vie collective.",
+        questions: [
+          "Je me sens à l’aise pour échanger dans un groupe (atelier, association, formation…).",
+          "Je connais au moins un lieu ou dispositif où la parole des jeunes est prise en compte.",
+          "Je sais faire respecter mes droits sans me mettre en danger (ou avec un soutien).",
+          "Je suis prêt(e) à m’engager dans une activité utile (bénévolat, projet collectif, service civique…)."
+        ]
+      },
+      {
+        id: "finances",
+        title: "Ressources financières & budget",
+        color: "bg-amber-50 text-amber-900",
+        description:
+          "Ta relation à l’argent, la gestion de ton budget, ta capacité à faire face aux dépenses du quotidien et aux projets.",
+        questions: [
+          "Je sais à peu près combien d’argent entre et sort chaque mois.",
+          "Je repère les moments où ma situation financière devient fragile.",
+          "Je peux parler d’argent avec un adulte ou un professionnel sans trop de gêne.",
+          "Je sais que certaines aides financières existent (allocations, aides logement, mobilité…).",
+          "Ma situation financière limite aujourd’hui certains projets (permis, logement, formation, loisirs…)."
+        ]
+      },
+      {
+        id: "loisirs",
+        title: "Loisirs, sport & culture",
+        color: "bg-teal-50 text-teal-900",
+        description:
+          "Ce qui te permet de souffler, de t’exprimer, de te sentir bien (sport, activités créatives, sorties, culture…).",
+        questions: [
+          "J’ai au moins une activité qui me fait du bien (sport, musique, jeu, création, etc.).",
+          "Je prends un minimum de temps pour moi dans la semaine.",
+          "Je découvre parfois de nouvelles activités, lieux ou personnes.",
+          "Je vois un lien entre certains de mes loisirs et mon projet d’avenir (compétences, réseau, idées…)."
+        ]
+      },
+      {
+        id: "numerique",
+        title: "Numérique – outils, accès, usages",
+        color: "bg-cyan-50 text-cyan-900",
+        description:
+          "Ton accès aux outils numériques (téléphone, internet, ordinateur) et ta capacité à les utiliser pour tes projets.",
+        questions: [
+          "J’ai accès régulièrement à un téléphone et à internet.",
+          "Je me débrouille pour faire des démarches en ligne, avec ou sans aide.",
+          "Je me sens capable d’utiliser le numérique pour chercher de l’info (emploi, formation, santé…).",
+          "Je fais attention à ce que j’envoie ou publie en ligne (image, données perso…)."
+        ]
+      },
+      {
+        id: "mode_vie",
+        title: "Mode de vie & organisation du quotidien",
+        color: "bg-lime-50 text-lime-900",
+        description:
+          "Ton rythme de vie de tous les jours : sommeil, alimentation, horaires, organisation, déplacements…",
+        questions: [
+          "Globalement, mes horaires de sommeil me permettent de tenir mes journées.",
+          "Je suis capable d’arriver à l’heure quand quelque chose est important pour moi.",
+          "Je m’organise (un minimum) pour mes rendez-vous, papiers, démarches.",
+          "Je vois ce que je pourrais améliorer dans mon rythme de vie pour avancer dans mes projets.",
+          "Je suis prêt(e) à tester de petits changements (horaires, habitudes) si ça m’aide à atteindre un objectif."
+        ]
+      }
+    ];
+
+    const TOTAL_QUESTIONS = domains.reduce((sum, d) => sum + d.questions.length, 0);
+
+    let currentDomainIndex = 0;
+    const answers = {}; // { "emploi_0": 1..4, ... }
+
+    const domainIndexEl = document.getElementById("domain-index");
+    const domainTitleEl = document.getElementById("domain-title");
+    const domainDescEl = document.getElementById("domain-description");
+    const questionsContainer = document.getElementById("questions-container");
+    const stepDotsContainer = document.getElementById("step-dots");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const resultsBtn = document.getElementById("results-btn");
+    const progressFill = document.getElementById("progress-fill");
+    const progressCounter = document.getElementById("progress-counter");
+    const resultsSection = document.getElementById("results-section");
+    const resultsTableBody = document.getElementById("results-table-body");
+    const youthSummaryEl = document.getElementById("youth-summary");
+    const counsellorSummaryEl = document.getElementById("counsellor-summary");
+
+    // Crée les petits points de progression (11 domaines)
+    function renderStepDots() {
+      stepDotsContainer.innerHTML = "";
+      domains.forEach((d, idx) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "step-dot" + (idx === currentDomainIndex ? " active" : "");
+        dot.title = d.title;
+        dot.addEventListener("click", () => {
+          currentDomainIndex = idx;
+          renderDomain();
+        });
+        stepDotsContainer.appendChild(dot);
+      });
+    }
+
+    function renderDomain() {
+      const domain = domains[currentDomainIndex];
+      domainIndexEl.textContent = currentDomainIndex + 1;
+      domainTitleEl.textContent = domain.title;
+      domainDescEl.textContent = domain.description;
+
+      // update dots
+      renderStepDots();
+
+      // navigation buttons
+      prevBtn.disabled = currentDomainIndex === 0;
+      nextBtn.textContent = currentDomainIndex === domains.length - 1 ? "Finir les questions →" : "Domaine suivant →";
+
+      // questions
+      questionsContainer.innerHTML = "";
+      domain.questions.forEach((qText, i) => {
+        const qId = `${domain.id}_${i}`;
+        const selectedValue = answers[qId];
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "flex question-layout items-center justify-between gap-4 rounded-2xl border border-slate-100 bg-white px-3.5 py-3";
+
+        const left = document.createElement("div");
+        left.className = "flex-1";
+        const label = document.createElement("p");
+        label.className = "text-sm text-slate-800";
+        label.textContent = qText;
+        left.appendChild(label);
+
+        const right = document.createElement("div");
+        right.className = "flex flex-col items-center gap-1";
+        const scale = document.createElement("div");
+        scale.className = "flex items-center gap-1.5";
+
+        for (let lvl = 1; lvl <= 4; lvl++) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "scale-dot" + (selectedValue === lvl ? " selected" : "");
+          btn.textContent = lvl;
+          btn.setAttribute("aria-label", `Niveau ${lvl} pour cette affirmation`);
+          btn.addEventListener("click", () => {
+            answers[qId] = lvl;
+            renderDomain();
+            updateProgress();
+          });
+          scale.appendChild(btn);
         }
-        
-        // Initialize navigation
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            if (currentPage > 0) goToPage(currentPage - 1);
-        });
-        
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            if (currentPage < totalPages - 1) goToPage(currentPage + 1);
-        });
-        
-        // Page indicators click
-        document.querySelectorAll('.page-indicator').forEach((indicator, index) => {
-            indicator.addEventListener('click', () => goToPage(index));
-        });
-        
-        // Initialize level selection system
-        document.querySelectorAll('.level-dot').forEach(dot => {
-            dot.addEventListener('click', function() {
-                const skill = this.dataset.skill;
-                const level = parseInt(this.dataset.level);
-                
-                // Remove selection from other dots of the same skill
-                document.querySelectorAll(`[data-skill="${skill}"]`).forEach(d => {
-                    d.classList.remove('selected');
-                });
-                
-                // Select this dot
-                this.classList.add('selected');
-                
-                // Store the level
-                skillLevels[skill] = level;
-                
-                // Update progress
-                updateProgress();
-            });
-        });
-        
-        function updateProgress() {
-            const totalSkills = 13;
-            const completedSkills = Object.keys(skillLevels).length;
-            
-            // Update progress display
-            document.getElementById('globalProgress').textContent = `${completedSkills}/${totalSkills}`;
-            
-            // Update progress bar
-            const progressPercent = (completedSkills / totalSkills) * 100;
-            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+
+        const scaleLegend = document.createElement("div");
+        scaleLegend.className = "flex justify-between w-full text-[0.6rem] text-slate-500";
+        scaleLegend.innerHTML = `
+          <span>Pas du tout moi</span>
+          <span>Tout à fait moi</span>
+        `;
+
+        right.appendChild(scale);
+        right.appendChild(scaleLegend);
+
+        wrapper.appendChild(left);
+        wrapper.appendChild(right);
+        questionsContainer.appendChild(wrapper);
+      });
+
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const answeredCount = Object.keys(answers).length;
+      const percent = (answeredCount / TOTAL_QUESTIONS) * 100;
+      progressFill.style.width = `${percent}%`;
+      progressCounter.textContent = `${answeredCount} / ${TOTAL_QUESTIONS}`;
+
+      // bouton résultats activé si au moins 60 % complété
+      resultsBtn.disabled = answeredCount < Math.round(TOTAL_QUESTIONS * 0.6);
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentDomainIndex > 0) {
+        currentDomainIndex--;
+        renderDomain();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentDomainIndex < domains.length - 1) {
+        currentDomainIndex++;
+        renderDomain();
+      }
+    });
+
+    resultsBtn.addEventListener("click", () => {
+      buildResults();
+      resultsSection.classList.remove("hidden");
+      resultsSection.scrollIntoView({ behavior: "smooth" });
+    });
+
+    function computeDomainScore(domain) {
+      const scores = [];
+      domain.questions.forEach((qText, i) => {
+        const qId = `${domain.id}_${i}`;
+        const val = answers[qId];
+        if (typeof val === "number") scores.push(val);
+      });
+      if (!scores.length) return null;
+      const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+      return avg;
+    }
+
+    function levelTag(score) {
+      if (score === null) {
+        return { label: "Non renseigné", class: "chip" };
+      } else if (score < 2) {
+        return { label: "À sécuriser", class: "chip tag-weak" };
+      } else if (score < 3) {
+        return { label: "À accompagner", class: "chip tag-ok" };
+      } else {
+        return { label: "Point d’appui", class: "chip tag-strong" };
+      }
+    }
+
+    // Pistes génériques par domaine (lecture pro)
+    const domainHints = {
+      emploi: "Travailler la présentation de soi, les simulations d’entretien, la découverte des métiers et des environnements de travail.",
+      formation: "Explorer les dispositifs de formation adaptés, sécuriser le rythme (soutien, tutorat), travailler la motivation et l’anticipation.",
+      orientation: "Clarifier les intérêts, valeurs et contraintes, multiplier les rencontres métiers, co-construire un cap réaliste et réversible.",
+      mobilite: "Repérer les freins de transport, mobiliser les aides et solutions (transport, permis, vélo, covoiturage), sécuriser les trajets.",
+      sante: "Prendre en compte le rythme de vie, orienter si besoin vers des ressources santé, aménager les parcours pour prévenir les ruptures.",
+      logement: "Évaluer la stabilité, informer sur les dispositifs logement/urgence/accompagnement, articuler projet et contraintes de vie.",
+      citoyennete: "S’appuyer sur des espaces d’expression (collectifs jeunes, service civique, associations) pour renforcer confiance et pouvoir d’agir.",
+      finances: "Travailler le budget, orienter vers les aides, sécuriser les ressources sur les temps de transition (formation, mobilité, logement…).",
+      loisirs: "Identifier les activités qui soutiennent le bien-être, la confiance, voire des compétences transférables au projet professionnel.",
+      numerique: "S’assurer de l’accès aux outils, accompagner les démarches en ligne, travailler les usages responsables et l’identité numérique.",
+      mode_vie: "Aborder sommeil, horaires, alimentation, déplacements, et voir comment ajuster le quotidien pour rendre les projets tenables."
+    };
+
+    function buildResults() {
+      resultsTableBody.innerHTML = "";
+      const youthLines = [];
+      const counsellorLines = [];
+
+      domains.forEach((domain) => {
+        const score = computeDomainScore(domain);
+        const tag = levelTag(score);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="px-3 py-2 align-top">
+            <div class="flex items-center gap-2">
+              <span class="domain-pill ${domain.color}">
+                ${domain.title.split("–")[0].trim()}
+              </span>
+            </div>
+          </td>
+          <td class="px-3 py-2 align-top">
+            ${
+              score === null
+                ? '<span class="text-xs italic text-slate-400">Non renseigné</span>'
+                : `<div class="flex items-center gap-2">
+                     <span class="text-sm font-semibold text-slate-900">${score.toFixed(1)} / 4</span>
+                     <span class="${tag.class}">${tag.label}</span>
+                   </div>`
+            }
+          </td>
+          <td class="px-3 py-2 align-top text-xs text-slate-700">
+            ${domain.description}
+          </td>
+          <td class="px-3 py-2 align-top text-xs text-slate-700">
+            ${domainHints[domain.id] || ""}
+          </td>
+        `;
+        resultsTableBody.appendChild(tr);
+
+        if (score !== null) {
+          if (score >= 3) {
+            youthLines.push(
+              `• <strong>${domain.title.split("–")[0].trim()}</strong> : un domaine où je peux m’appuyer sur mes forces.`
+            );
+          } else if (score < 2) {
+            youthLines.push(
+              `• <strong>${domain.title.split("–")[0].trim()}</strong> : un domaine à sécuriser, à travailler pas à pas avec mon/ma conseiller(ère).`
+            );
+          } else {
+            youthLines.push(
+              `• <strong>${domain.title.split("–")[0].trim()}</strong> : un domaine à accompagner, où j’ai déjà des bases mais aussi des besoins.`
+            );
+          }
+
+          if (score < 2.5) {
+            counsellorLines.push(
+              `• <strong>${domain.title.split("–")[0].trim()}</strong> : approfondir en entretien (score ${score.toFixed(
+                1
+              )}/4) et intégrer des actions spécifiques dans le plan CEP.`
+            );
+          }
         }
-        
-        function updateVisualizations() {
-            const completedSkills = Object.keys(skillLevels).length;
-            if (completedSkills < 3) {
-                document.getElementById('strengthsList').innerHTML = '<p class="text-gray-600 italic">Évalue au moins 3 compétences pour voir tes résultats !</p>';
-                document.getElementById('improvementsList').innerHTML = '<p class="text-gray-600 italic">Continue ton évaluation...</p>';
-                return;
-            }
-            
-            updateRadarChart();
-            updateStrengthsAndImprovements();
-        }
-        
-        function updateRadarChart() {
-            const canvas = document.getElementById('radarChart');
-            const ctx = canvas.getContext('2d');
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = 150;
-            
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Calculate category averages
-            const categoryScores = {1: [], 2: [], 3: [], 4: []};
-            Object.entries(skillLevels).forEach(([skill, level]) => {
-                const category = skillCategories[skill];
-                categoryScores[category].push(level);
-            });
-            
-            const categoryAverages = [];
-            for (let cat = 1; cat <= 4; cat++) {
-                const scores = categoryScores[cat];
-                const average = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
-                categoryAverages.push(average / 4); // Normalize to 0-1
-            }
-            
-            const labels = ['Valorisation\nde soi', 'Connaissance\nde soi', 'Résilience &\néquilibre', 'Finances &\nautonomie'];
-            const colors = ['#E63946', '#FFD166', '#06D6A0', '#000000'];
-            
-            // Draw grid
-            ctx.strokeStyle = '#e2e8f0';
-            ctx.lineWidth = 1;
-            for (let i = 1; i <= 4; i++) {
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, (radius * i) / 4, 0, 2 * Math.PI);
-                ctx.stroke();
-            }
-            
-            // Draw axes
-            for (let i = 0; i < 4; i++) {
-                const angle = (i * Math.PI * 2) / 4 - Math.PI / 2;
-                const x = centerX + Math.cos(angle) * radius;
-                const y = centerY + Math.sin(angle) * radius;
-                
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.lineTo(x, y);
-                ctx.stroke();
-                
-                // Draw labels
-                ctx.fillStyle = '#1E293B';
-                ctx.font = 'bold 14px Montserrat';
-                ctx.textAlign = 'center';
-                const labelX = centerX + Math.cos(angle) * (radius + 50);
-                const labelY = centerY + Math.sin(angle) * (radius + 50);
-                
-                const lines = labels[i].split('\n');
-                lines.forEach((line, index) => {
-                    ctx.fillText(line, labelX, labelY + (index * 16));
-                });
-            }
-            
-            // Draw data polygon
-            if (categoryAverages.some(avg => avg > 0)) {
-                ctx.beginPath();
-                for (let i = 0; i < 4; i++) {
-                    const angle = (i * Math.PI * 2) / 4 - Math.PI / 2;
-                    const distance = categoryAverages[i] * radius;
-                    const x = centerX + Math.cos(angle) * distance;
-                    const y = centerY + Math.sin(angle) * distance;
-                    
-                    if (i === 0) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
-                }
-                ctx.closePath();
-                
-                // Fill
-                ctx.fillStyle = 'rgba(230, 57, 70, 0.3)';
-                ctx.fill();
-                
-                // Stroke
-                ctx.strokeStyle = '#E63946';
-                ctx.lineWidth = 3;
-                ctx.stroke();
-                
-                // Draw points
-                for (let i = 0; i < 4; i++) {
-                    const angle = (i * Math.PI * 2) / 4 - Math.PI / 2;
-                    const distance = categoryAverages[i] * radius;
-                    const x = centerX + Math.cos(angle) * distance;
-                    const y = centerY + Math.sin(angle) * distance;
-                    
-                    ctx.beginPath();
-                    ctx.arc(x, y, 8, 0, 2 * Math.PI);
-                    ctx.fillStyle = colors[i];
-                    ctx.fill();
-                    ctx.strokeStyle = 'white';
-                    ctx.lineWidth = 3;
-                    ctx.stroke();
-                }
-            }
-        }
-        
-        function updateStrengthsAndImprovements() {
-            const skillsWithLevels = Object.entries(skillLevels).map(([skill, level]) => ({
-                skill,
-                level,
-                name: skillNames[skill]
-            }));
-            
-            // Sort by level
-            skillsWithLevels.sort((a, b) => b.level - a.level);
-            
-            // Top 3 strengths (level 3-4)
-            const strengths = skillsWithLevels.filter(s => s.level >= 3).slice(0, 3);
-            const strengthsList = document.getElementById('strengthsList');
-            strengthsList.innerHTML = '';
-            
-            if (strengths.length > 0) {
-                strengths.forEach(strength => {
-                    const div = document.createElement('div');
-                    div.className = 'flex items-center text-sm bg-white rounded-xl p-4 border border-green-200 shadow-sm';
-                    div.innerHTML = `
-                        <span class="text-green-600 mr-4 text-xl">✅</span>
-                        <span class="flex-1 font-medium">${strength.name}</span>
-                        <span class="ml-auto text-green-700 font-bold text-lg">${strength.level}/4</span>
-                    `;
-                    strengthsList.appendChild(div);
-                });
-            } else {
-                strengthsList.innerHTML = '<p class="text-gray-600 italic">Continue à évaluer tes compétences pour voir tes points forts !</p>';
-            }
-            
-            // Bottom 3 improvements (level 1-2)
-            const improvements = skillsWithLevels.filter(s => s.level <= 2).slice(-3).reverse();
-            const improvementsList = document.getElementById('improvementsList');
-            improvementsList.innerHTML = '';
-            
-            if (improvements.length > 0) {
-                improvements.forEach(improvement => {
-                    const div = document.createElement('div');
-                    div.className = 'flex items-center text-sm bg-white rounded-xl p-4 border border-orange-200 shadow-sm';
-                    div.innerHTML = `
-                        <span class="text-orange-600 mr-4 text-xl">🎯</span>
-                        <span class="flex-1 font-medium">${improvement.name}</span>
-                        <span class="ml-auto text-orange-700 font-bold text-lg">${improvement.level}/4</span>
-                    `;
-                    improvementsList.appendChild(div);
-                });
-            } else {
-                improvementsList.innerHTML = '<p class="text-gray-600 italic">Évalue plus de compétences pour identifier tes axes de progression !</p>';
-            }
-        }
-        
-        // Export functionality
-        document.getElementById('exportResults').addEventListener('click', function() {
-            const completedSkills = Object.keys(skillLevels).length;
-            if (completedSkills === 0) {
-                alert('⚠️ Évalue au moins une compétence avant d\'exporter !');
-                return;
-            }
-            
-            const averageLevel = Object.values(skillLevels).reduce((sum, level) => sum + level, 0) / completedSkills;
-            const strengths = document.getElementById('strengths').value;
-            const improvements = document.getElementById('improvements').value;
-            const goal = document.getElementById('goal').value;
-            
-            const exportText = `🚀 MON BILAN LS4YOU\n\n` +
-                `📊 Compétences évaluées: ${completedSkills}/13\n` +
-                `📈 Réponse moyenne: ${Math.round((averageLevel / 4) * 100)}%\n\n` +
-                `💪 Mes forces:\n${strengths || 'Non renseigné'}\n\n` +
-                `🎯 À développer:\n${improvements || 'Non renseigné'}\n\n` +
-                `🚀 Mon objectif 3 mois:\n${goal || 'Non renseigné'}\n\n` +
-                `#LS4YOU #LifeSkills #DeveloppementPersonnel`;
-            
-            // Create and download file
-            const blob = new Blob([exportText], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'mon-bilan-ls4you.txt';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
-        
-        // Reset functionality
-        document.getElementById('resetForm').addEventListener('click', function() {
-            if (confirm('Sûr de vouloir tout recommencer ? 🤔')) {
-                skillLevels = {};
-                
-                // Reset all selections
-                document.querySelectorAll('.level-dot').forEach(dot => {
-                    dot.classList.remove('selected');
-                });
-                
-                // Reset text areas
-                document.getElementById('strengths').value = '';
-                document.getElementById('improvements').value = '';
-                document.getElementById('goal').value = '';
-                
-                // Go back to first page
-                goToPage(0);
-                
-                updateProgress();
-            }
-        });
-        
-        // Share functionality
-        document.getElementById('shareResults').addEventListener('click', function() {
-            const completedSkills = Object.keys(skillLevels).length;
-            if (completedSkills === 0) {
-                alert('⚠️ Évalue au moins une compétence avant de partager !');
-                return;
-            }
-            
-            const averageLevel = Object.values(skillLevels).reduce((sum, level) => sum + level, 0) / completedSkills;
-            
-            const shareText = `🚀 J'ai fait mon auto-positionnement LS4YOU !\n\n` +
-                `📊 ${completedSkills}/13 compétences évaluées\n` +
-                `📈 Réponse moyenne: ${Math.round((averageLevel / 4) * 100)}%\n\n` +
-                `Prêt(e) à développer tes life skills ? 💪\n\n` +
-                `#LS4YOU #LifeSkills #DeveloppementPersonnel`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Mon bilan LS4YOU',
-                    text: shareText
-                });
-            } else {
-                navigator.clipboard.writeText(shareText).then(() => {
-                    alert('📋 Texte copié ! Tu peux le partager maintenant 🚀');
-                });
-            }
-        });
-        
-        // Initialize
-        updateProgress();
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98375ebf53a16f9f',t:'MTc1ODYwMjQ5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+      });
+
+      youthSummaryEl.innerHTML = youthLines.length
+        ? youthLines.join("<br/>")
+        : '<li class="italic text-slate-500">Compléter davantage le questionnaire pour obtenir un retour personnalisé.</li>';
+
+      counsellorSummaryEl.innerHTML = counsellorLines.length
+        ? counsellorLines.join("<br/>")
+        : '<li class="italic text-slate-500">Aucun domaine n’apparaît comme prioritaire, mais un échange qualitatif reste nécessaire.</li>';
+    }
+
+    // Initialisation
+    renderStepDots();
+    renderDomain();
+  </script>
+</body>
 </html>
