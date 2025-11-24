@@ -9,71 +9,70 @@
 
 <style>
 :root {
-/* Palette Mission Locale Pays Basque */
---mlpb-orange: #f39200;
---mlpb-green: #95c11f;
---mlpb-blue: #2897d5;
---mlpb-pink: #d60b52;
---mlpb-violet: #a3195b;
---mlpb-brick: #9f3d3f;
---mlpb-black: #171718;
+--ml-orange: #f39200;
+--ml-green: #95c11f;
+--ml-blue: #2897d5;
+--ml-pink: #d60b52;
+--ml-violet: #a3195b;
+--ml-brick: #9f3d3f;
+--ml-black: #171718;
 
---bg-main: #ffffff;
---bg-soft: #f7fafc;
+--ls-red: #e53935;
+--ls-yellow: #ffca28;
+--ls-turquoise: #26c6da;
+--ls-mint: #a5d6a7;
+
+--bg-page: #f5f5f7;
+--bg-card: #ffffff;
 --border-soft: #e2e8f0;
---text-main: #111827;
---text-muted: #4b5563;
---text-light: #6b7280;
---shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.06);
+--text-main: #1f2933;
+--text-muted: #6b7280;
 --radius-lg: 18px;
 --radius-md: 12px;
---radius-sm: 8px;
---focus-ring: 0 0 0 3px rgba(40, 151, 213, 0.35);
+--shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 * {
 box-sizing: border-box;
 }
 
-html, body {
+body {
 margin: 0;
-padding: 0;
-min-height: 100%;
-font-family: "Poppins", "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-background: var(--bg-main);
+padding: 20px;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+"Roboto", sans-serif;
+background: var(--bg-page);
 color: var(--text-main);
 }
 
-body {
-padding: 20px;
-}
-
 .container {
-max-width: 1100px;
+max-width: 1050px;
 margin: 0 auto;
-background: #ffffff;
+background: var(--bg-card);
 border-radius: 24px;
-border: 1px solid var(--border-soft);
 box-shadow: var(--shadow-soft);
 overflow: hidden;
-display: flex;
-flex-direction: column;
+border: 1px solid var(--border-soft);
 }
+
+/* HEADER / BRANDING */
 
 .header {
-padding: 24px 28px 20px 28px;
+position: relative;
+padding: 28px 32px 26px;
+background: linear-gradient(135deg, #ffffff 0%, #fdf6ee 40%, #f3fbff 100%);
+border-bottom: 3px solid var(--ml-orange);
 display: flex;
-align-items: center;
-justify-content: space-between;
+flex-direction: column;
 gap: 16px;
-border-bottom: 3px solid var(--mlpb-blue);
-background: linear-gradient(90deg, #ffffff 0%, #f3f7fb 50%, #ffffff 100%);
 }
 
-.header-left {
+.header-top {
 display: flex;
+justify-content: space-between;
 align-items: center;
-gap: 18px;
+gap: 16px;
+flex-wrap: wrap;
 }
 
 .logo-left,
@@ -81,51 +80,75 @@ gap: 18px;
 background: #ffffff;
 border-radius: 999px;
 padding: 6px 14px;
-border: 1px solid var(--border-soft);
-box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
-display: flex;
+display: inline-flex;
 align-items: center;
 justify-content: center;
+box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+border: 1px solid #edf2f7;
 max-height: 56px;
 }
 
 .logo-left img,
 .logo-container img {
-max-height: 44px;
+max-height: 42px;
 width: auto;
 object-fit: contain;
 }
 
-.header-text h1 {
-margin: 0 0 4px 0;
-font-size: 1.7rem;
+.header-text {
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+
+.header h1 {
+margin: 0;
+font-size: 1.85rem;
 font-weight: 800;
-color: var(--mlpb-violet);
+color: var(--ml-black);
 letter-spacing: 0.03em;
 }
 
-.header-text p {
-margin: 0;
+.header-subtitle {
 font-size: 0.95rem;
-color: var(--text-light);
-font-weight: 500;
+color: var(--text-muted);
 }
 
-.header-badge {
-display: inline-flex;
-align-items: center;
-gap: 6px;
+.header-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-top: 8px;
+}
+
+.tag {
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 0.06em;
 padding: 4px 10px;
 border-radius: 999px;
-background: rgba(40, 151, 213, 0.06);
-border: 1px solid rgba(40, 151, 213, 0.2);
-font-size: 0.75rem;
-color: var(--mlpb-blue);
+background: #fff7e6;
+color: var(--ml-orange);
+border: 1px solid #ffe0b2;
 font-weight: 600;
 }
 
+.tag-secondary {
+background: #e3f2fd;
+color: var(--ml-blue);
+border-color: #bbdefb;
+}
+
+.tag-life {
+background: #fce4ec;
+color: var(--ml-pink);
+border-color: #f8bbd0;
+}
+
+/* CONTENT LAYOUT */
+
 .content {
-padding: 28px;
+padding: 28px 28px 30px;
 background: #ffffff;
 }
 
@@ -139,104 +162,98 @@ display: block;
 
 .intro-section {
 margin-bottom: 24px;
-}
-
-.intro-title-row {
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-gap: 16px;
-align-items: center;
+text-align: left;
 }
 
 .intro-section h2 {
-margin: 0;
-font-size: 1.5rem;
+margin: 0 0 10px;
+font-size: 1.4rem;
 font-weight: 800;
-color: var(--mlpb-pink);
+color: var(--ml-black);
 display: flex;
-gap: 8px;
 align-items: center;
+gap: 8px;
 }
 
-.intro-section h2 span.icon {
-font-size: 1.6rem;
+.intro-section h2 span {
+font-size: 1.5rem;
 }
 
 .intro-section p {
-margin: 12px 0 0 0;
-font-size: 0.95rem;
-color: var(--text-muted);
-max-width: 720px;
-line-height: 1.6;
-}
-
-.intro-context {
-margin-top: 14px;
-padding: 14px 16px;
-background: var(--bg-soft);
-border-radius: var(--radius-md);
-border-left: 4px solid var(--mlpb-orange);
-font-size: 0.9rem;
-color: var(--text-muted);
-}
-
-.intro-context strong {
-color: var(--mlpb-orange);
-}
-
-.info-panel {
-margin: 22px 0;
-padding: 18px 18px 16px 18px;
-border-radius: var(--radius-lg);
-background: #ffffff;
-border: 1px solid var(--border-soft);
-display: grid;
-grid-template-columns: 1.3fr 1.2fr;
-gap: 12px;
-}
-
-.info-panel h3 {
-margin: 0 0 8px 0;
-font-size: 0.98rem;
-font-weight: 700;
-color: var(--mlpb-violet);
-text-transform: uppercase;
-letter-spacing: 0.04em;
-}
-
-.info-panel p {
 margin: 0;
-font-size: 0.9rem;
 color: var(--text-muted);
+font-size: 0.95rem;
 line-height: 1.5;
 }
 
-.legend-grid {
+.how-it-works {
+margin-top: 20px;
+border-radius: var(--radius-lg);
+padding: 18px 18px 14px;
+border: 1px solid #e0f2ff;
+background: linear-gradient(
+135deg,
+#f3f8ff 0%,
+#ffffff 55%,
+#fff8f1 100%
+);
+}
+
+.how-it-works h3 {
+margin: 0 0 8px;
+font-size: 0.95rem;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+color: var(--ml-blue);
+font-weight: 700;
+}
+
+.how-it-works p {
+margin: 0 0 10px;
+font-size: 0.9rem;
+color: var(--text-main);
+}
+
+.scale-legend {
 display: grid;
 grid-template-columns: repeat(4, minmax(0, 1fr));
 gap: 8px;
-margin-top: 8px;
+margin-top: 10px;
 }
 
-.legend-item {
-border-radius: 999px;
-padding: 8px 10px;
+.scale-item {
+border-radius: var(--radius-md);
+padding: 8px;
+text-align: center;
 font-size: 0.8rem;
-display: flex;
-flex-direction: column;
-gap: 2px;
 color: #ffffff;
+font-weight: 500;
 }
 
-.legend-item small {
+.scale-item small {
+display: block;
+margin-top: 2px;
+font-size: 0.7rem;
 opacity: 0.9;
 }
 
-.legend-1 { background: var(--mlpb-brick); }
-.legend-2 { background: var(--mlpb-orange); }
-.legend-3 { background: var(--mlpb-green); }
-.legend-4 { background: var(--mlpb-blue); }
+.scale-1 {
+background: var(--ls-red);
+}
+
+.scale-2 {
+background: var(--ls-yellow);
+color: #4e342e;
+}
+
+.scale-3 {
+background: var(--ls-turquoise);
+}
+
+.scale-4 {
+background: var(--ls-mint);
+color: #1b5e20;
+}
 
 .form-group {
 margin-bottom: 18px;
@@ -245,135 +262,64 @@ margin-bottom: 18px;
 .form-group label {
 display: block;
 margin-bottom: 6px;
-font-weight: 600;
 font-size: 0.9rem;
+font-weight: 600;
 color: var(--text-main);
 }
 
-.form-group small {
-display: block;
-font-size: 0.78rem;
-color: var(--text-light);
+.required {
+color: var(--ml-pink);
+margin-left: 2px;
 }
 
 .form-group input {
 width: 100%;
-padding: 11px 12px;
 border-radius: 999px;
 border: 1px solid var(--border-soft);
+padding: 10px 14px;
 font-size: 0.95rem;
-font-family: inherit;
-transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.form-group input:focus-visible {
 outline: none;
-border-color: var(--mlpb-blue);
-box-shadow: var(--focus-ring);
+transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.btn-row {
-display: flex;
-flex-wrap: wrap;
-gap: 10px;
-margin-top: 10px;
+.form-group input:focus {
+border-color: var(--ml-blue);
+box-shadow: 0 0 0 3px rgba(40, 151, 213, 0.15);
 }
 
-.btn {
-appearance: none;
-border: none;
-cursor: pointer;
-border-radius: 999px;
-padding: 11px 20px;
-font-size: 0.9rem;
-font-weight: 700;
-letter-spacing: 0.02em;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 6px;
-transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
-white-space: nowrap;
-}
-
-.btn-primary {
-background: var(--mlpb-blue);
-color: #ffffff;
-box-shadow: 0 6px 14px rgba(40, 151, 213, 0.3);
-}
-
-.btn-primary:hover {
-background: #1d7cb1;
-transform: translateY(-1px);
-box-shadow: 0 8px 18px rgba(40, 151, 213, 0.35);
-}
-
-.btn-secondary {
-background: #ffffff;
-color: var(--text-main);
-border: 1px solid var(--border-soft);
-}
-
-.btn-secondary:hover {
-background: var(--bg-soft);
-}
-
-.btn-ghost {
-background: transparent;
-color: var(--mlpb-blue);
-border: 1px solid transparent;
-}
-
-.btn-ghost:hover {
-background: rgba(40, 151, 213, 0.06);
-border-color: rgba(40, 151, 213, 0.15);
-}
-
-.btn-danger {
-background: var(--mlpb-brick);
-color: #ffffff;
-}
-
-.btn:focus-visible {
-outline: none;
-box-shadow: var(--focus-ring);
-}
-
-.btn[disabled] {
-opacity: 0.6;
-cursor: not-allowed;
-box-shadow: none;
-transform: none;
-}
+/* SAVED / LOCAL DATA */
 
 .saved-assessments {
-margin-top: 16px;
-padding: 14px 16px;
+margin: 18px 0;
 border-radius: var(--radius-lg);
-background: #f0f9ff;
-border: 1px solid #bfdbfe;
+border: 1px solid #e5e7eb;
+background: #f9fafb;
+padding: 12px 14px;
 }
 
 .saved-assessments h3 {
-margin: 0 0 8px 0;
-font-size: 0.95rem;
-color: var(--mlpb-blue);
+margin: 0 0 10px;
+font-size: 0.9rem;
+color: var(--text-main);
 }
 
 .assessment-item {
 background: #ffffff;
 border-radius: var(--radius-md);
 padding: 10px 12px;
-margin-top: 8px;
 display: flex;
 align-items: center;
 justify-content: space-between;
 gap: 10px;
-border: 1px solid var(--border-soft);
+border: 1px solid #edf2f7;
+margin-bottom: 8px;
+font-size: 0.85rem;
 }
 
 .assessment-info {
-font-size: 0.85rem;
+display: flex;
+flex-direction: column;
+gap: 2px;
 }
 
 .assessment-name {
@@ -382,237 +328,274 @@ color: var(--text-main);
 }
 
 .assessment-date {
-color: var(--text-light);
+color: var(--text-muted);
 font-size: 0.8rem;
 }
+
+.local-load {
+margin-top: 8px;
+font-size: 0.8rem;
+color: var(--text-muted);
+}
+
+/* DOMAINS / QUESTIONS */
 
 .progress-bar {
 width: 100%;
 height: 8px;
+background: #f3f4f6;
 border-radius: 999px;
-background: #edf2f7;
 overflow: hidden;
-margin-bottom: 20px;
+margin-bottom: 18px;
 }
 
 .progress-fill {
 height: 100%;
-width: 0%;
-background: linear-gradient(90deg, var(--mlpb-pink), var(--mlpb-orange), var(--mlpb-green), var(--mlpb-blue));
-transition: width 0.35s ease;
+width: 0;
+border-radius: 999px;
+background: linear-gradient(
+90deg,
+var(--ml-orange),
+var(--ml-pink),
+var(--ml-blue)
+);
+transition: width 0.4s ease;
 }
 
 .domain-section {
-background: #ffffff;
 border-radius: var(--radius-lg);
 border: 1px solid var(--border-soft);
-padding: 18px 18px 16px 18px;
+padding: 20px 18px 18px;
 margin-bottom: 18px;
-}
-
-.domain-header-row {
-display: flex;
-justify-content: space-between;
-align-items: baseline;
-gap: 8px;
-margin-bottom: 6px;
+background: #ffffff;
 }
 
 .domain-title {
-font-size: 1.1rem;
-font-weight: 800;
-color: var(--mlpb-violet);
 display: flex;
 align-items: center;
-gap: 8px;
+gap: 10px;
+margin-bottom: 6px;
+font-size: 1.1rem;
+font-weight: 700;
+color: var(--ml-black);
 }
 
 .domain-icon {
-font-size: 1.3rem;
-}
-
-.domain-chip {
-font-size: 0.75rem;
-border-radius: 999px;
-padding: 4px 9px;
-background: rgba(40, 151, 213, 0.06);
-color: var(--mlpb-blue);
-border: 1px solid rgba(40, 151, 213, 0.2);
+font-size: 1.4rem;
 }
 
 .domain-objective {
-font-size: 0.85rem;
+font-size: 0.9rem;
 color: var(--text-muted);
-margin-top: 6px;
-padding-top: 4px;
-border-top: 1px dashed var(--border-soft);
+margin-bottom: 12px;
+}
+
+.domain-objective strong {
+color: var(--ml-blue);
+font-weight: 600;
 }
 
 .question {
-margin-top: 14px;
-padding-top: 10px;
-border-top: 1px solid #f3f4f6;
+margin-bottom: 14px;
+padding: 10px 10px 4px;
+border-radius: var(--radius-md);
 }
 
-.question-text-row {
-display: flex;
-justify-content: space-between;
-align-items: flex-start;
-gap: 8px;
+.question:nth-child(odd) {
+background: #f9fafb;
 }
 
 .question-text {
-font-size: 0.9rem;
-font-weight: 500;
+font-size: 0.95rem;
+margin-bottom: 8px;
 color: var(--text-main);
 }
 
-.question-tooltip {
-font-size: 0.8rem;
-color: var(--text-light);
-cursor: help;
-}
-
 .rating-scale {
-margin-top: 10px;
 display: grid;
 grid-template-columns: repeat(4, minmax(0, 1fr));
 gap: 8px;
 }
 
 .rating-option {
-border-radius: var(--radius-md);
-padding: 9px 8px;
+position: relative;
 display: flex;
-flex-direction: column;
 align-items: center;
+justify-content: center;
 gap: 4px;
+padding: 8px 6px;
+border-radius: 999px;
 border: 1px solid transparent;
+background: #ffffff;
 cursor: pointer;
-background: #f9fafb;
-transition: transform 0.08s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+font-size: 0.8rem;
+color: var(--text-main);
+transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
 }
 
 .rating-option input[type="radio"] {
-position: absolute;
-opacity: 0;
-pointer-events: none;
+display: none;
 }
 
-.rating-label-main {
-font-size: 0.8rem;
-font-weight: 600;
-color: var(--text-main);
-}
-
-.rating-label-sub {
-font-size: 0.75rem;
-color: var(--text-light);
+.rating-label {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+white-space: nowrap;
 }
 
 .rating-option[data-value="1"] {
-background: #fef2f2;
-border-color: #fee2e2;
+border-color: #ffcdd2;
+background: #ffebee;
 }
 
 .rating-option[data-value="2"] {
-background: #fff7ed;
-border-color: #ffedd5;
+border-color: #ffe0b2;
+background: #fff8e1;
 }
 
 .rating-option[data-value="3"] {
-background: #ecfdf3;
-border-color: #bbf7d0;
+border-color: #b2ebf2;
+background: #e0f7fa;
 }
 
 .rating-option[data-value="4"] {
-background: #eff6ff;
-border-color: #bfdbfe;
+border-color: #c8e6c9;
+background: #e8f5e9;
 }
 
-.rating-option:hover {
+.rating-option.selected {
 transform: translateY(-1px);
-box-shadow: 0 6px 12px rgba(15, 23, 42, 0.06);
+box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+font-weight: 600;
 }
 
-.rating-option.selected[data-value="1"] {
-background: var(--mlpb-brick);
-border-color: var(--mlpb-brick);
-color: #ffffff;
+.rating-option[data-value="1"].selected {
+border-color: var(--ls-red);
 }
 
-.rating-option.selected[data-value="2"] {
-background: var(--mlpb-orange);
-border-color: var(--mlpb-orange);
-color: #111827;
+.rating-option[data-value="2"].selected {
+border-color: var(--ls-yellow);
 }
 
-.rating-option.selected[data-value="3"] {
-background: var(--mlpb-green);
-border-color: var(--mlpb-green);
-color: #064e3b;
+.rating-option[data-value="3"].selected {
+border-color: var(--ls-turquoise);
 }
 
-.rating-option.selected[data-value="4"] {
-background: var(--mlpb-blue);
-border-color: var(--mlpb-blue);
-color: #ffffff;
+.rating-option[data-value="4"].selected {
+border-color: var(--ls-mint);
 }
 
-.rating-option.selected .rating-label-main,
-.rating-option.selected .rating-label-sub {
-color: inherit;
-}
+/* BUTTONS */
 
-.nav-row {
+.btn-row {
 text-align: center;
 margin-top: 20px;
 display: flex;
-justify-content: center;
-gap: 10px;
 flex-wrap: wrap;
+gap: 10px;
+justify-content: center;
 }
 
+.btn {
+border-radius: 999px;
+border: none;
+padding: 10px 20px;
+font-size: 0.9rem;
+font-weight: 600;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+transition: background-color 0.15s, box-shadow 0.15s, transform 0.1s;
+white-space: nowrap;
+}
+
+.btn-primary {
+background: var(--ml-orange);
+color: #ffffff;
+box-shadow: 0 4px 14px rgba(243, 146, 0, 0.35);
+}
+
+.btn-primary:hover:not(:disabled) {
+background: #e28500;
+transform: translateY(-1px);
+}
+
+.btn-secondary {
+background: #e3f2fd;
+color: var(--ml-blue);
+border: 1px solid #bbdefb;
+box-shadow: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+background: #d2e8fb;
+transform: translateY(-1px);
+}
+
+.btn-outline {
+background: #ffffff;
+color: var(--text-main);
+border: 1px solid #d1d5db;
+}
+
+.btn-outline:hover:not(:disabled) {
+background: #f9fafb;
+transform: translateY(-1px);
+}
+
+.btn-small {
+padding: 6px 12px;
+font-size: 0.8rem;
+box-shadow: none;
+}
+
+.btn:disabled {
+opacity: 0.6;
+cursor: not-allowed;
+box-shadow: none;
+transform: none;
+}
+
+/* RESULTS */
+
 .results-section h2 {
-margin: 0 0 8px 0;
-font-size: 1.4rem;
+font-size: 1.35rem;
+margin: 0 0 10px;
 font-weight: 800;
-color: var(--mlpb-violet);
-text-align: left;
+color: var(--ml-black);
 }
 
 .results-section p {
-margin: 4px 0 14px 0;
-font-size: 0.9rem;
+margin: 0 0 10px;
+font-size: 0.95rem;
 color: var(--text-muted);
 }
 
 .radar-container {
-display: grid;
-grid-template-columns: repeat(2, minmax(0, 1fr));
+display: flex;
+flex-wrap: wrap;
 gap: 16px;
-margin-top: 10px;
+margin: 20px 0;
 }
 
 .chart-container {
-background: #ffffff;
+flex: 1 1 260px;
 border-radius: var(--radius-lg);
 border: 1px solid var(--border-soft);
-padding: 16px 16px 12px 16px;
+padding: 14px 16px;
+background: #f9fafb;
 }
 
 .chart-title {
 font-size: 0.95rem;
 font-weight: 700;
-color: var(--mlpb-violet);
+color: var(--ml-black);
 margin-bottom: 10px;
 display: flex;
 align-items: center;
 gap: 6px;
-}
-
-.chart-title span.icon {
-font-size: 1.1rem;
 }
 
 .life-skills-grid {
@@ -622,39 +605,39 @@ gap: 10px;
 }
 
 .skill-card {
-background: var(--bg-soft);
+background: #ffffff;
 border-radius: var(--radius-md);
 padding: 10px 12px;
+border: 1px solid #e5e7eb;
 display: flex;
-flex-direction: column;
-gap: 2px;
+align-items: center;
+justify-content: space-between;
+gap: 6px;
 }
 
 .skill-name {
 font-size: 0.85rem;
-font-weight: 600;
 color: var(--text-main);
+font-weight: 600;
 }
 
 .skill-score {
-font-size: 1.2rem;
-font-weight: 800;
-color: var(--mlpb-blue);
+font-size: 1rem;
+font-weight: 700;
+color: var(--ml-pink);
 }
 
 .domain-bars {
-display: flex;
-flex-direction: column;
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
 gap: 8px;
-max-height: 260px;
-overflow-y: auto;
 }
 
 .domain-bar {
 border-radius: var(--radius-md);
-padding: 8px 8px 6px 8px;
-background: #f9fafb;
+background: #ffffff;
 border: 1px solid #e5e7eb;
+padding: 8px 8px 6px;
 }
 
 .domain-bar-name {
@@ -666,95 +649,78 @@ margin-bottom: 4px;
 
 .bar-container {
 width: 100%;
-border-radius: 999px;
-background: #e5e7eb;
-overflow: hidden;
 height: 18px;
+border-radius: 999px;
+background: #f3f4f6;
+overflow: hidden;
 }
 
 .bar-fill {
 height: 100%;
+border-radius: 999px;
+background: linear-gradient(
+90deg,
+var(--ml-green),
+var(--ml-blue),
+var(--ml-pink)
+);
+font-size: 0.75rem;
+color: #ffffff;
 display: flex;
 align-items: center;
 justify-content: center;
-font-size: 0.75rem;
-font-weight: 700;
-color: #ffffff;
-background: linear-gradient(90deg, var(--mlpb-pink), var(--mlpb-orange));
-transition: width 0.4s ease;
+white-space: nowrap;
+transition: width 0.5s ease;
 }
 
 .priority-areas,
 .action-plan {
-margin-top: 16px;
 border-radius: var(--radius-lg);
-padding: 16px 16px 14px 16px;
-border: 1px solid var(--border-soft);
-background: #f9fafb;
+border: 1px solid #e5e7eb;
+padding: 16px 16px 12px;
+background: #fdfdfd;
+margin-top: 16px;
 }
 
 .priority-title,
 .action-title {
-margin: 0 0 8px 0;
-font-size: 0.98rem;
+font-size: 1rem;
 font-weight: 700;
-color: var(--mlpb-violet);
+margin: 0 0 8px;
+color: var(--ml-black);
 }
 
 .priority-areas p,
 .action-plan p {
-font-size: 0.88rem;
-color: var(--text-muted);
-margin: 3px 0;
+font-size: 0.9rem;
+margin-bottom: 6px;
 }
 
 .priority-areas label {
+display: block;
 font-size: 0.85rem;
+background: #ffffff;
+border: 1px solid #e5e7eb;
+border-radius: var(--radius-md);
+padding: 8px 10px;
+margin-bottom: 6px;
+cursor: pointer;
 }
 
-.selected-priorities {
-margin-top: 8px;
+#selectedPriorities {
 font-size: 0.85rem;
-color: var(--mlpb-blue);
-font-weight: 600;
+color: var(--ml-blue);
 }
 
-.results-actions {
-margin-top: 18px;
-display: flex;
-flex-wrap: wrap;
-gap: 10px;
-justify-content: flex-start;
-}
-
-.loading {
-display: none;
-margin-top: 16px;
-text-align: center;
-font-size: 0.9rem;
-color: var(--text-light);
-}
-
-.spinner {
-border: 3px solid #e5e7eb;
-border-top: 3px solid var(--mlpb-blue);
-border-radius: 50%;
-width: 28px;
-height: 28px;
-margin: 0 auto 6px auto;
-animation: spin 0.9s linear infinite;
-}
-
-@keyframes spin {
-to { transform: rotate(360deg); }
-}
+/* ACTIVITIES */
 
 .activity-card {
-background: #ffffff;
 border-radius: var(--radius-lg);
-padding: 16px 16px 14px 16px;
-margin-top: 14px;
-border: 1px solid var(--border-soft);
+border: 1px solid #e5e7eb;
+padding: 14px 14px 10px;
+background: #ffffff;
+margin-bottom: 12px;
+box-shadow: 0 4px 10px rgba(15, 23, 42, 0.03);
 }
 
 .activity-header {
@@ -770,7 +736,7 @@ font-size: 1.4rem;
 
 .activity-title {
 margin: 0;
-font-size: 1rem;
+font-size: 0.98rem;
 font-weight: 700;
 color: var(--text-main);
 }
@@ -778,22 +744,12 @@ color: var(--text-main);
 .activity-subtitle {
 margin: 0;
 font-size: 0.8rem;
-color: var(--text-light);
+color: var(--text-muted);
 }
 
-.activity-meta {
-display: flex;
-flex-wrap: wrap;
-gap: 8px;
-margin: 8px 0;
-}
-
-.meta-item {
-font-size: 0.78rem;
-padding: 5px 9px;
-border-radius: 999px;
-background: var(--bg-soft);
-color: var(--text-light);
+.activity-card p {
+font-size: 0.9rem;
+margin-bottom: 6px;
 }
 
 .skills-tags {
@@ -804,17 +760,31 @@ margin: 8px 0;
 }
 
 .skill-tag {
-font-size: 0.78rem;
+font-size: 0.75rem;
+border-radius: 999px;
+padding: 4px 8px;
+background: #f3e5f5;
+color: var(--ml-violet);
+}
+
+.activity-meta {
+display: flex;
+flex-wrap: wrap;
+gap: 6px;
+margin-bottom: 8px;
+}
+
+.meta-item {
+font-size: 0.75rem;
 padding: 4px 8px;
 border-radius: 999px;
-background: rgba(163, 25, 91, 0.08);
-color: var(--mlpb-violet);
+background: #f3f4f6;
+color: var(--text-muted);
 }
 
 .activity-steps h4 {
-margin: 8px 0 4px 0;
 font-size: 0.9rem;
-color: var(--text-main);
+margin: 6px 0;
 }
 
 .step-list {
@@ -825,84 +795,148 @@ margin: 0;
 
 .step-item {
 font-size: 0.85rem;
+padding: 5px 6px;
+border-left: 3px solid var(--ml-green);
 background: #f9fafb;
-border-radius: var(--radius-md);
-padding: 7px 9px;
-margin-top: 5px;
+border-radius: 4px;
+margin-bottom: 4px;
 }
 
 .transfer-note {
-margin-top: 8px;
-padding: 8px 9px;
+margin-top: 6px;
+font-size: 0.85rem;
+background: #e3f2fd;
 border-radius: var(--radius-md);
-background: #ecfdf3;
-border: 1px solid #bbf7d0;
-font-size: 0.83rem;
-color: #166534;
+padding: 8px 10px;
+border: 1px solid #bbdefb;
 }
 
 .transfer-title {
 font-weight: 600;
+color: var(--ml-blue);
 margin-bottom: 2px;
+font-size: 0.85rem;
 }
+
+/* INLINE MESSAGES */
 
 .inline-message {
 position: fixed;
-z-index: 2000;
 right: 20px;
 top: 20px;
-max-width: 320px;
-border-radius: var(--radius-md);
-padding: 10px 12px;
-font-size: 0.9rem;
+background: var(--ml-blue);
 color: #ffffff;
+padding: 10px 14px;
+border-radius: 999px;
+box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+font-size: 0.85rem;
+font-weight: 500;
 display: flex;
-align-items: flex-start;
+align-items: center;
 gap: 8px;
-box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
-animation: fadeInSlide 0.25s ease-out;
+z-index: 9999;
 }
 
-.inline-message span.icon {
-font-size: 1.1rem;
-margin-top: 1px;
+.inline-message.error {
+background: #e53935;
 }
 
-.inline-message.success { background: #16a34a; }
-.inline-message.error { background: #b91c1c; }
-.inline-message.warning { background: #f59e0b; }
-
-@keyframes fadeInSlide {
-from { opacity: 0; transform: translateY(-6px); }
-to { opacity: 1; transform: translateY(0); }
+.inline-message.warning {
+background: #fb8c00;
 }
 
-/* Export JSON panel */
-#exportPanel {
-margin-top: 12px;
+.inline-message.success {
+background: var(--ml-green);
+color: #12351b;
+}
+
+.inline-message span {
+font-size: 1rem;
+}
+
+/* LOADING */
+
+.loading {
 display: none;
+text-align: center;
+margin-top: 10px;
+font-size: 0.9rem;
+color: var(--text-muted);
 }
 
-#exportPanel textarea {
-width: 100%;
-min-height: 140px;
-border-radius: var(--radius-md);
-border: 1px solid var(--border-soft);
-font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-font-size: 0.78rem;
+.spinner {
+width: 24px;
+height: 24px;
+border-radius: 999px;
+border: 3px solid #e5e7eb;
+border-top-color: var(--ml-blue);
+margin: 0 auto 6px;
+animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+to {
+transform: rotate(360deg);
+}
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+body {
 padding: 8px;
-resize: vertical;
-background: #f9fafb;
 }
 
-#exportPanel small {
-display: block;
-margin-top: 4px;
-font-size: 0.78rem;
-color: var(--text-light);
+.container {
+border-radius: 18px;
 }
 
-/* Print / PDF */
+.header {
+padding: 18px 16px 16px;
+}
+
+.header h1 {
+font-size: 1.35rem;
+}
+
+.content {
+padding: 18px 14px 20px;
+}
+
+.scale-legend {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.rating-scale {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.life-skills-grid {
+grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.domain-bars {
+grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.radar-container {
+flex-direction: column;
+}
+
+.btn-row {
+flex-direction: column;
+}
+
+.inline-message {
+left: 8px;
+right: 8px;
+top: 10px;
+justify-content: center;
+}
+}
+
+/* PRINT (EXPORT PDF) */
+
 @media print {
 body {
 padding: 0;
@@ -917,58 +951,12 @@ border: none;
 
 .btn,
 .inline-message,
-.saved-assessments,
-.nav-row,
-.results-actions {
+.loading {
 display: none !important;
 }
-
-#exportPanel {
-display: none !important;
-}
-}
-
-@media (max-width: 768px) {
-body { padding: 10px; }
-
-.container { border-radius: 16px; }
 
 .header {
-flex-direction: column;
-align-items: flex-start;
-}
-
-.header-left {
-width: 100%;
-justify-content: space-between;
-}
-
-.info-panel {
-grid-template-columns: 1fr;
-}
-
-.legend-grid {
-grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.content { padding: 18px 16px 20px 16px; }
-
-.life-skills-grid {
-grid-template-columns: 1fr;
-}
-
-.radar-container {
-grid-template-columns: 1fr;
-}
-
-.rating-scale {
-grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.inline-message {
-right: 10px;
-left: 10px;
-top: 10px;
+border-bottom: 2px solid var(--ml-orange);
 }
 }
 </style>
@@ -976,271 +964,208 @@ top: 10px;
 <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
 </head>
 <body>
-<div class="container" role="main" aria-label="Outil de diagnostic Life Skills Mission Locale">
+<div class="container" aria-label="Diagnostic Life Skills Mission Locale">
 <div class="header">
-<div class="header-left">
-<div class="logo-left" aria-label="Logo Mission Locale Pays Basque">
-<img
-src="https://static.wixstatic.com/media/dd5dab_47743b1c86024865ba19e623a3db327f~mv2.avif/v1/fill/w_313,h_84,al_c,lg_1,q_80,enc_avif,quality_auto/dd5dab_47743b1c86024865ba19e623a3db327f~mv2.avif"
+<div class="header-top">
+<div class="logo-left">
+<img src="https://static.wixstatic.com/media/dd5dab_47743b1c86024865ba19e623a3db327f~mv2.avif/v1/fill/w_313,h_84,al_c,lg_1,q_80,enc_avif,quality_auto/dd5dab_47743b1c86024865ba19e623a3db327f~mv2.avif"
 alt="Mission Locale Pays Basque"
-onerror="this.src=''; this.alt='Logo Mission Locale indisponible'; this.style.display='none';">
+onerror="this.src=''; this.alt='Logo Mission Locale'; this.style.display='none';">
 </div>
 <div class="header-text">
 <h1 id="toolTitle">Diagnostic Life Skills</h1>
-<p id="organizationName">
-Mission Locale Pays Basque • Parcours d'accompagnement ancré Life Skills
-</p>
-<div class="header-badge" aria-hidden="true">
-<span>🔎</span> Socle RPE / 11 domaines d'insertion
+<div class="header-subtitle" id="organizationName">
+Mission Locale Pays Basque – Repérage & Premier Entretien
+</div>
+<div class="header-tags" aria-hidden="true">
+<span class="tag">Life Skills</span>
+<span class="tag tag-secondary">Parcours d'insertion</span>
+<span class="tag tag-life">Jeunes 16–25 ans</span>
 </div>
 </div>
+<div class="logo-container">
+<img src="https://static.wixstatic.com/media/dd5dab_31e98305be67485d92cdb56f82c0e03f~mv2.png/v1/fill/w_560,h_224,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/LS4YOU_Logo.png"
+alt="LS4YOU – Life Skills for Youth"
+onerror="this.src=''; this.alt='Logo LS4YOU'; this.style.display='none';">
 </div>
-<div class="logo-container" aria-label="Logo LS4YOU">
-<img
-src="https://static.wixstatic.com/media/dd5dab_31e98305be67485d92cdb56f82c0e03f~mv2.png/v1/fill/w_560,h_224,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/LS4YOU_Logo.png"
-alt="LS4YOU - Life Skills for Youth"
-onerror="this.src=''; this.alt='Logo LS4YOU indisponible'; this.style.display='none';">
 </div>
 </div>
 
 <div class="content">
-
 <!-- Étape 1: Accueil -->
-<div class="step active" id="step-welcome">
-<section class="intro-section" aria-labelledby="intro-title">
-<div class="intro-title-row">
-<div>
-<h2 id="intro-title"><span class="icon">🎯</span>Diagnostic Life Skills – 11 domaines d'insertion</h2>
+<div class="step active" id="step-welcome" aria-labelledby="welcome-title">
+<div class="intro-section">
+<h2 id="welcome-title"><span>🎯</span> Ton diagnostic Life Skills</h2>
 <p id="instructionsText">
-Ce diagnostic vous permettra d'identifier vos forces et vos besoins dans 11 domaines essentiels à votre
-insertion sociale et professionnelle. Il sert de base commune de dialogue entre le jeune et le conseiller.
+Ce diagnostic repère tes forces et ce qui peut être travaillé dans 11 domaines du quotidien
+(emploi, formation, santé, logement, budget, mobilité, etc.). Il sert de support à l’échange
+avec ton conseiller.
 </p>
-<div class="intro-context" aria-label="Contexte d'utilisation">
-<strong>Repère RPE :</strong> ce questionnaire est un outil d'appui au premier accueil, à l'entretien
-d'accompagnement et à la construction du parcours. Il ne remplace pas l'échange, il l'organise
-autour des Life Skills (personnalité, valorisation, bien-être, ressources).
-</div>
-</div>
-</div>
 
-<div class="info-panel" aria-label="Mode d'emploi du diagnostic">
-<div>
+<div class="how-it-works" aria-label="Comment répondre aux questions">
 <h3>Comment répondre ?</h3>
-<p>
-Pour chaque affirmation, choisissez le niveau qui vous ressemble le plus aujourd'hui.
-Il n'y a pas de bonne ou de mauvaise réponse : l'objectif est d'avoir une photographie réaliste.
-</p>
+<p>Pour chaque phrase, choisis ce qui te ressemble le plus en ce moment :</p>
+<div class="scale-legend">
+<div class="scale-item scale-1">
+🙈 Pas encore
+<small>Ce n’est pas moi / très rare</small>
 </div>
-<div>
-<h3>Légende des niveaux</h3>
-<div class="legend-grid">
-<div class="legend-item legend-1">
-<span>🔴 Zone de défi</span>
-<small>C'est difficile pour moi</small>
+<div class="scale-item scale-2">
+🙂 Un peu
+<small>Ça m’arrive, pas tout le temps</small>
 </div>
-<div class="legend-item legend-2">
-<span>🟡 En progression</span>
-<small>J'y arrive parfois</small>
+<div class="scale-item scale-3">
+💪 Plutôt oui
+<small>Assez souvent, je me reconnais dedans</small>
 </div>
-<div class="legend-item legend-3">
-<span>🟢 Plutôt au point</span>
-<small>Je me débrouille bien</small>
-</div>
-<div class="legend-item legend-4">
-<span>⭐ C'est mon fort</span>
-<small>Je maîtrise vraiment</small>
+<div class="scale-item scale-4">
+🌟 Tout à fait
+<small>C’est vraiment moi / très souvent</small>
 </div>
 </div>
 </div>
 </div>
-</section>
 
 <div class="form-group">
-<label for="participantName">Prénom et nom du jeune *</label>
-<input type="text" id="participantName" required aria-required="true"
-placeholder="Ex : Marie Dupont">
-<small>Ces informations figureront uniquement sur la synthèse du diagnostic.</small>
+<label for="participantName">Ton prénom et nom<span class="required">*</span></label>
+<input type="text" id="participantName" placeholder="Ex : Lina Martin" required
+aria-required="true">
 </div>
 
-<div id="lastAssessmentBanner" class="saved-assessments" style="display:none;" aria-label="Dernier diagnostic enregistré">
-<h3>🗂 Reprendre le dernier diagnostic local</h3>
-<div class="assessment-item">
-<div class="assessment-info">
-<div class="assessment-name" id="lastAssessmentName"></div>
-<div class="assessment-date" id="lastAssessmentDate"></div>
-</div>
-<button class="btn btn-secondary btn-small"
-type="button"
-onclick="StorageManager.loadLastAssessment()"
-aria-label="Recharger le dernier diagnostic sauvegardé sur cet appareil">
-Recharger
-</button>
-</div>
-</div>
-
-<div class="saved-assessments" id="savedAssessments" style="display:none;" aria-label="Diagnostics sauvegardés dans la base">
-<h3>📋 Diagnostics précédents (base de données)</h3>
+<div class="saved-assessments" id="savedAssessments" style="display: none;">
+<h3>Diagnostics déjà enregistrés</h3>
 <div id="assessmentsList"></div>
 </div>
 
-<div class="btn-row">
-<button class="btn btn-primary"
-type="button"
-onclick="startAssessment()"
-aria-label="Commencer le diagnostic Life Skills">
-Commencer le diagnostic
+<div class="local-load">
+<button class="btn btn-small btn-outline" type="button"
+onclick="loadLocalAssessment()" aria-label="Charger le dernier diagnostic enregistré sur cet appareil">
+🔁 Charger le dernier diagnostic sur cet appareil
 </button>
-<button class="btn btn-ghost"
-type="button"
-onclick="showInlineMessage('Le diagnostic peut être utilisé en autonomie, en entretien ou en atelier collectif. Le conseiller choisit le mode adapté.', 'warning')">
-ℹ️ Rappel modes d'usage (autonomie / entretien / collectif)
+</div>
+
+<div class="btn-row">
+<button class="btn btn-primary" onclick="startAssessment()" aria-label="Commencer le diagnostic">
+▶️ Commencer le diagnostic
+</button>
+<button class="btn btn-secondary" type="button" onclick="exportToPDF()" aria-label="Exporter en PDF">
+🧾 Exporter en PDF
 </button>
 </div>
 </div>
 
 <!-- Étape 2: Questions -->
-<div class="step" id="step-assessment" aria-label="Questions par domaine Life Skills">
+<div class="step" id="step-assessment" aria-label="Questions par domaine">
 <div class="progress-bar" aria-hidden="true">
 <div class="progress-fill" id="progressFill"></div>
 </div>
 <div id="questionsContainer"></div>
-
-<div class="nav-row">
-<button class="btn btn-secondary"
-type="button"
-id="prevBtn"
-style="display:none;"
-onclick="previousDomain()"
+<div class="btn-row" aria-label="Navigation entre les domaines">
+<button class="btn btn-secondary" id="prevBtn" onclick="previousDomain()" style="display:none;"
 aria-label="Revenir au domaine précédent">
-⬅️ Précédent
+◀️ Précédent
 </button>
-<button class="btn btn-primary"
-type="button"
-id="nextBtn"
-onclick="nextDomain()"
+<button class="btn btn-primary" id="nextBtn" onclick="nextDomain()"
 aria-label="Passer au domaine suivant">
-Suivant ➡️
+Suivant ▶️
 </button>
 </div>
 </div>
 
 <!-- Étape 3: Résultats -->
-<div class="step" id="step-results" aria-label="Synthèse des résultats Life Skills">
+<div class="step" id="step-results" aria-label="Résultats du diagnostic">
 <div class="results-section">
-<h2>📊 Vos résultats Life Skills</h2>
+<h2>📊 Tes résultats Life Skills</h2>
 <p>
-Cette synthèse met en lien les 11 domaines d’insertion avec les 4 axes Life Skills.
-Elle sert de support au debrief avec le jeune et à la construction du mini-parcours.
+Ces résultats servent de base au dialogue avec ton conseiller. Ensemble, vous choisirez
+les domaines à travailler en priorité et les activités adaptées.
 </p>
 
 <div class="radar-container">
-<div class="chart-container" aria-label="Scores par axe Life Skills">
-<div class="chart-title"><span class="icon">🧠</span>Compétences Life Skills</div>
+<div class="chart-container" aria-label="Synthèse par grands axes Life Skills">
+<div class="chart-title">🧠 Axes Life Skills</div>
 <div class="life-skills-grid" id="lifeSkillsResults"></div>
 </div>
-
-<div class="chart-container" aria-label="Scores par domaine d'insertion">
-<div class="chart-title"><span class="icon">📈</span>Domaines d'insertion</div>
+<div class="chart-container" aria-label="Résultats par domaine de vie">
+<div class="chart-title">📈 Domaines de ton quotidien</div>
 <div class="domain-bars" id="domainResults"></div>
 </div>
 </div>
 
 <div class="priority-areas" id="priorityAreas"></div>
 
+<div class="action-plan">
+<div class="action-title">💬 Pour en parler avec ton conseiller</div>
+<div id="debriefQuestions">
+<p><strong>Ce que tu fais déjà bien :</strong></p>
+<p><em>Dans quels domaines te sens-tu le plus à l’aise ? Qu’est-ce que tu veux garder / renforcer ?</em></p>
+<p><strong>Ce qui freine un peu :</strong></p>
+<p><em>Où est-ce que c’est le plus compliqué en ce moment ? Qu’est-ce qui te bloque ?</em></p>
+<p><strong>Ce qui pourrait t’aider maintenant :</strong></p>
+<p><em>De quelles aides, activités ou coups de pouce tu aurais besoin pour avancer ?</em></p>
+</div>
+</div>
+
 <div class="action-plan" id="actionPlan"></div>
 
-<div class="results-actions">
-<button class="btn btn-secondary"
-type="button"
-onclick="restartAssessment()">
-Nouveau diagnostic
+<div class="btn-row">
+<button class="btn btn-secondary" onclick="restartAssessment()">
+🔁 Nouveau diagnostic
 </button>
-<button class="btn btn-primary"
-type="button"
-id="saveBtn"
-onclick="saveResults()">
-💾 Sauvegarder (base de données)
+<button class="btn btn-primary" id="saveBtn" onclick="saveResults()">
+💾 Sauvegarder
 </button>
-<button class="btn btn-secondary"
-type="button"
-onclick="StorageManager.saveToLocal()">
-💻 Sauvegarder en local
-</button>
-<button class="btn btn-secondary"
-type="button"
-onclick="exportToJSON()">
-📤 Export JSON
-</button>
-<button class="btn btn-secondary"
-type="button"
-onclick="window.print()">
-🖨️ Export PDF
-</button>
-<button class="btn btn-primary"
-type="button"
-style="background: var(--mlpb-green);"
-onclick="showActivities()">
+<button class="btn btn-outline" onclick="showActivities()">
 🎯 Voir les activités proposées
 </button>
-</div>
-
-<div id="exportPanel" aria-label="Export des données au format JSON">
-<textarea id="exportData" readonly></textarea>
-<small>
-Copiez/collez ces données dans votre SI ou dans un outil de suivi (interopérabilité).
-</small>
-</div>
-
-<div class="loading" id="loading">
-<div class="spinner" role="status" aria-label="Chargement"></div>
-<p>Sauvegarde en cours...</p>
+<button class="btn btn-secondary" type="button" onclick="exportToPDF()">
+🧾 Exporter en PDF
+</button>
 </div>
 </div>
 </div>
 
 <!-- Étape 4: Activités -->
-<div class="step" id="step-activities" aria-label="Activités recommandées par domaine">
+<div class="step" id="step-activities" aria-label="Activités proposées">
 <div class="results-section">
-<h2>🎯 Activités adaptées à vos besoins</h2>
+<h2>🎯 Activités LS4YOU adaptées à ton profil</h2>
 <p>
-Ces activités LS4YOU peuvent être mobilisées en atelier collectif, en entretien ou en autonomie,
-pour travailler les compétences identifiées comme prioritaires.
+Ces activités permettent de travailler concrètement certaines compétences (Life Skills)
+liées à tes domaines prioritaires.
 </p>
-
 <div id="activitiesContainer"></div>
-
-<div class="results-actions" style="margin-top: 16px;">
-<button class="btn btn-secondary"
-type="button"
-onclick="showStep('step-results')">
-⬅️ Retour à la synthèse
+<div class="btn-row">
+<button class="btn btn-secondary" onclick="showStep('step-results')">
+◀️ Retour aux résultats
 </button>
-<button class="btn btn-secondary"
-type="button"
-onclick="restartAssessment()">
-Nouveau diagnostic
+<button class="btn btn-outline" onclick="restartAssessment()">
+🔁 Refaire un diagnostic
 </button>
 </div>
 </div>
 </div>
 
+<div class="loading" id="loading">
+<div class="spinner" aria-hidden="true"></div>
+<p>Sauvegarde en cours…</p>
+</div>
 </div>
 </div>
 
 <script>
-// --- CONFIG DOMAINES & QUESTIONS (inchangé sur le fond) ---
+// --- CONFIG DOMAINS (questions reformulées, plus jeunes & neutres) ---
 
 const domains = [
 {
 name: "Emploi",
 icon: "💼",
-objective: "Évaluer la capacité à se présenter, comprendre les codes professionnels, demander de l'aide, se projeter dans le travail",
+objective: "Voir comment tu te présentes, comprends les attentes d’un job et demandes de l’aide quand il faut.",
 questions: [
-"Même sans diplôme, je sais mettre en avant mes qualités",
-"Face à un employeur, j'arrive à expliquer pourquoi il devrait me recruter",
-"Quand on me donne une mission, je comprends ce qu'on attend de moi",
-"Si j'ai des difficultés au travail, j'ose demander de l'aide",
-"Il y a au moins un type de métier où je me projette"
+"Je sais mettre en avant mes qualités quand je parle de moi.",
+"Quand je dois me présenter pour un job, j’arrive à dire pourquoi on peut compter sur moi.",
+"Quand on me confie quelque chose, je comprends globalement ce qu’on attend de moi.",
+"Si je ne suis pas sûr de ce qu’il faut faire, je peux demander des explications.",
+"J’ai déjà repéré au moins un type de job dans lequel je me verrais bien."
 ],
 lifeSkills: {
 "Personnalité": "motivation / choix / forces",
@@ -1252,13 +1177,13 @@ lifeSkills: {
 {
 name: "Formation",
 icon: "📚",
-objective: "Évaluer concentration, persévérance, rapport à l'erreur, capacité à poser des questions",
+objective: "Observer ta façon d’apprendre, de rester jusqu’au bout et de gérer les évaluations.",
 questions: [
-"Même si l'école était difficile, je peux me concentrer sur ce qui m'intéresse",
-"Je peux suivre une formation sur plusieurs jours sans abandonner",
-"En cours, j'ose poser des questions si je ne comprends pas",
-"Les examens me stressent mais ne me paralysent pas",
-"Si une formation peut m'aider, je suis prêt·e à faire des efforts"
+"Quand quelque chose m’intéresse, je peux rester concentré un moment dessus.",
+"Si je commence une formation ou un atelier, j’essaie d’aller au bout.",
+"En cours ou en atelier, je peux dire quand je n’ai pas compris.",
+"Les contrôles ou évaluations peuvent me stresser, mais je réussis à les passer.",
+"Si une formation peut m’aider pour la suite, je suis prêt·e à m’y investir."
 ],
 lifeSkills: {
 "Personnalité": "persévérance / rapport à l'effort",
@@ -1270,13 +1195,13 @@ lifeSkills: {
 {
 name: "Orientation",
 icon: "🧭",
-objective: "Évaluer intérêts, valeurs, forces, idées d'avenir, flexibilité",
+objective: "Repérer ce que tu aimes, tes idées pour la suite et ta souplesse si ça change.",
 questions: [
-"J'ai au moins une idée de ce que je pourrais faire plus tard",
-"Je sais ce qui me plaît dans la vie, même si ce n'est pas scolaire",
-"Il y a des domaines où je me débrouille mieux que d'autres",
-"J'ai le droit de me tromper et de changer de voie",
-"Même dans l'incertitude, je vois quelques pistes pour avancer"
+"J’ai au moins une idée de ce que j’aimerais faire plus tard (même si ce n’est pas précis).",
+"Je sais dire ce que j’aime bien faire et ce qui m’ennuie.",
+"Je vois des liens entre ce que je fais aujourd’hui (loisirs, stages, expériences) et des idées de métiers.",
+"Je sais que j’ai le droit de tester, d’essayer, et de changer d’avis.",
+"Même si tout n’est pas clair, je vois quelques pistes possibles pour la suite."
 ],
 lifeSkills: {
 "Personnalité": "intérêts / valeurs",
@@ -1288,13 +1213,13 @@ lifeSkills: {
 {
 name: "Mobilité",
 icon: "🚗",
-objective: "Observer organisation, autonomie, accès aux transports, gestion stress déplacements",
+objective: "Comprendre comment tu t’organises pour te déplacer et gérer les trajets.",
 questions: [
-"Quand j'ai un rendez-vous important, j'arrive à m'y rendre",
-"J'ai au moins un moyen de me déplacer (même si c'est compliqué)",
-"Si je dois aller quelque part de nouveau, je peux demander comment faire",
-"Parfois les transports me posent des problèmes (argent, stress, organisation)",
-"Je sais vers qui me tourner si j'ai un problème de transport"
+"Quand j’ai un rendez-vous important, je peux m’y rendre (même si ce n’est pas simple).",
+"J’ai au moins un moyen de me déplacer (bus, voiture, vélo, marche, covoiturage…).",
+"Si je dois aller dans un endroit que je ne connais pas, je peux me renseigner pour y aller.",
+"Les transports (coût, horaires, organisation) peuvent être compliqués, mais je cherche des solutions.",
+"Je sais à qui je peux en parler si j’ai un souci pour me déplacer."
 ],
 lifeSkills: {
 "Personnalité": "autonomie",
@@ -1306,13 +1231,13 @@ lifeSkills: {
 {
 name: "Santé",
 icon: "❤️",
-objective: "Évaluer énergie, stress, stratégies de régulation, repérage des signaux",
+objective: "Voir comment tu te sens dans ton corps et dans ta tête, et comment tu gères les coups de fatigue ou de stress.",
 questions: [
-"En général, j'ai l'énergie pour faire ce que j'ai à faire",
-"Je sens quand ça ne va pas dans ma tête ou mon corps",
-"J'ai ma façon à moi de décompresser quand ça va mal",
-"Il y a au moins une personne à qui je peux dire que ça ne va pas",
-"Ma santé (physique ou mentale) me complique parfois les choses"
+"La plupart du temps, j’ai assez d’énergie pour faire ce que j’ai à faire.",
+"Je remarque quand quelque chose ne va pas (fatigue, moral, douleurs…).",
+"J’ai quelques façons à moi pour me calmer ou me détendre quand ça ne va pas.",
+"Il y a au moins une personne à qui je peux dire quand ça ne va pas.",
+"Ma santé (physique ou mentale) complique parfois les choses pour moi."
 ],
 lifeSkills: {
 "Personnalité": "limites personnelles",
@@ -1324,12 +1249,12 @@ lifeSkills: {
 {
 name: "Logement",
 icon: "🏡",
-objective: "Comprendre l'impact du logement sur le quotidien, la sécurité, la capacité à avancer",
+objective: "Comprendre comment ton lieu de vie joue sur ton repos, ta sécurité et ton organisation.",
 questions: [
-"J'ai un endroit où dormir en sécurité",
-"Chez moi, je peux me reposer tranquillement quand j'en ai besoin",
-"Mon logement me permet d'aller à mes rendez-vous et activités",
-"Si ma situation de logement changeait, je saurais qui contacter"
+"J’ai un endroit où dormir qui me semble suffisamment sûr.",
+"Là où je vis, je peux me reposer un minimum quand j’en ai besoin.",
+"Mon lieu de vie me permet globalement d’aller à mes rendez-vous et activités.",
+"Si ma situation de logement devait changer, je saurais vers qui me tourner pour en parler."
 ],
 lifeSkills: {
 "Personnalité": "estime – je mérite un lieu stable",
@@ -1340,13 +1265,14 @@ lifeSkills: {
 },
 {
 name: "Citoyenneté",
-icon: "🔴",
-objective: "Évaluer l'expression, la participation, la capacité à demander du soutien",
+icon: "🤝",
+objective: "Repérer ta place dans les groupes, tes droits et ton envie de participer.",
 questions: [
-"Dans un petit groupe bienveillant, j'arrive à dire ce que je pense",
-"Il y a au moins un adulte qui m'écoute vraiment",
-"Je sais que j'ai des droits, même si je ne connais pas tout",
-"S'il y avait un projet qui m'intéresse, je pourrais m'y investir"
+"Dans un petit groupe où je me sens en confiance, j’arrive à dire ce que je pense.",
+"Il y a au moins un adulte (pro ou proche) qui m’écoute vraiment quand je parle.",
+"Je sais que j’ai des droits (même si je ne les connais pas tous en détail).",
+"Si un projet, une action ou une cause m’intéresse, je pourrais m’y investir.",
+"Quand quelque chose ne me convient pas, je peux l’exprimer sans exploser ni tout fuir."
 ],
 lifeSkills: {
 "Personnalité": "sentiment d'agir",
@@ -1358,13 +1284,13 @@ lifeSkills: {
 {
 name: "Finances",
 icon: "💶",
-objective: "Explorer compréhension du budget, aides, stress financier",
+objective: "Explorer ta relation à l’argent, au budget et aux aides possibles.",
 questions: [
-"Je sais combien j'ai d'argent par mois (même si ce n'est pas beaucoup)",
-"Je vois quand je vais avoir des difficultés financières",
-"Je peux parler d'argent avec quelqu'un sans avoir honte",
-"Je sais qu'il y a des aides possibles (même si je ne connais pas tout)",
-"Le manque d'argent m'empêche parfois de faire certaines choses"
+"Je sais globalement d’où vient l’argent que je reçois et comment je le dépense.",
+"Je remarque quand je risque d’être juste niveau argent.",
+"Je peux parler d’argent avec quelqu’un en qui j’ai confiance.",
+"Je sais qu’il existe des aides possibles (même si je ne connais pas tous les détails).",
+"Le manque d’argent m’empêche parfois de faire des choses importantes pour moi."
 ],
 lifeSkills: {
 "Personnalité": "prise de décision / priorisation",
@@ -1376,13 +1302,13 @@ lifeSkills: {
 {
 name: "Loisirs",
 icon: "🎨",
-objective: "Repérer activités qui soutiennent l'équilibre et la motivation",
+objective: "Repérer ce qui te fait du bien et t’aide à tenir dans le quotidien.",
 questions: [
-"J'ai au moins une activité que j'aime faire qui me fait du bien",
-"Je prends du temps pour moi dans la semaine",
-"De temps en temps, je teste de nouvelles activités ou endroits",
-"Mes activités m'aident à aller mieux ou à avoir confiance",
-"Je vois un lien entre ce que j'aime et ce que je pourrais faire plus tard"
+"J’ai au moins une activité ou un centre d’intérêt qui me fait du bien.",
+"Je garde un peu de temps pour moi dans la semaine (même si ce n’est pas beaucoup).",
+"De temps en temps, j’essaie de nouvelles activités, lieux ou façons de faire.",
+"Ce que j’aime faire m’aide à me sentir mieux ou plus confiant.",
+"Je vois un peu le lien entre ce que j’aime et ce que je pourrais faire plus tard."
 ],
 lifeSkills: {
 "Personnalité": "goûts, talents",
@@ -1394,13 +1320,13 @@ lifeSkills: {
 {
 name: "Numérique",
 icon: "📱",
-objective: "Évaluer accès aux outils, compétences numériques essentielles, sécurité en ligne",
+objective: "Voir comment tu utilises ton téléphone, internet et les démarches en ligne.",
 questions: [
-"J'ai accès à un téléphone et internet quand j'en ai besoin",
-"Je peux me débrouiller pour faire des démarches en ligne",
-"Je sais chercher des informations utiles sur internet",
-"Je fais attention à ce que je poste sur les réseaux sociaux",
-"Si j'ai des difficultés avec le numérique, je sais à qui demander"
+"J’ai accès à un téléphone et à internet assez régulièrement.",
+"Je peux me débrouiller (avec ou sans aide) pour faire une démarche en ligne simple.",
+"Je sais chercher des informations utiles sur internet (horaires, droits, services…).",
+"Je fais attention à ce que je publie sur les réseaux, selon avec qui je partage.",
+"Si j’ai une galère numérique, je sais à qui demander un coup de main."
 ],
 lifeSkills: {
 "Personnalité": "limites / choix / contrôle",
@@ -1412,13 +1338,13 @@ lifeSkills: {
 {
 name: "Mode de vie",
 icon: "⏳",
-objective: "Comprendre comment le rythme quotidien impacte projet, énergie et disponibilité",
+objective: "Comprendre comment ton rythme de vie t’aide (ou pas) à tenir dans la durée.",
 questions: [
-"Mes horaires de sommeil me permettent de tenir le coup",
-"Quand c'est important, j'arrive à être à l'heure",
-"Je note mes rendez-vous importants pour ne pas les oublier",
-"J'arrive à jongler entre mes différentes activités",
-"Je sais quand j'ai besoin de faire une pause et je le fais"
+"Mon sommeil me permet globalement de récupérer (même si ce n’est pas parfait).",
+"Quand c’est important, j’arrive en général à être à l’heure.",
+"Je note ou je garde des rappels pour ne pas oublier mes rendez-vous importants.",
+"Je réussis à jongler plus ou moins entre mes activités, obligations et temps pour moi.",
+"Je remarque quand j’ai besoin de souffler et j’essaie de me garder un moment pour ça."
 ],
 lifeSkills: {
 "Personnalité": "organisation personnelle / limites",
@@ -1436,190 +1362,190 @@ const lifeSkillsMapping = {
 "Ressources": ["Mobilité", "Finances", "Numérique"]
 };
 
-// Activités (inchangé sur le fond – même liste que ta version précédente)
+// Activités (inchangé sur le fond)
 const domainActivities = {
 "Emploi": [
 {
 title: "Mon Pitch en 30 secondes",
-objective: "Apprendre à parler de soi simplement",
+objective: "Apprendre à parler de soi simplement.",
 skills: ["Valorisation", "Personnalité"],
 duration: "45 min",
 format: "Individuel + vidéo",
 steps: [
-"Compléter 3 phrases : 'Je suis...', 'On me reconnaît souvent pour...', 'Je suis doué·e pour...'",
-"Construire un pitch simple et authentique",
-"Enregistrer une vidéo de présentation",
-"Recevoir des retours bienveillants du groupe"
+"Compléter 3 phrases : « Je suis… », « On me reconnaît souvent pour… », « Je suis doué·e pour… »",
+"Construire un pitch simple et authentique.",
+"Enregistrer une vidéo de présentation.",
+"Recevoir des retours bienveillants du groupe."
 ],
-transfer: "Utile pour les entretiens d'embauche et présentations professionnelles"
+transfer: "Utile pour les entretiens d'embauche et présentations professionnelles."
 }
 ],
 "Formation": [
 {
 title: "Le Feedback qui fait grandir",
-objective: "Apprendre à recevoir et demander un feedback",
+objective: "Apprendre à recevoir et demander un feedback.",
 skills: ["Valorisation", "Bien-être"],
 duration: "1h",
 format: "Collectif + binômes",
 steps: [
-"Mini-jeu : identifier 'bon feedback / mauvais feedback'",
-"Simulations en binôme pour pratiquer",
-"Élaboration d'une action 'je progresse dans...'",
-"Debrief collectif sur les apprentissages"
+"Mini-jeu : repérer les « bons » et « mauvais » feedbacks.",
+"Simulations en binôme pour s'entraîner.",
+"Formuler une action concrète « je progresse dans… ».",
+"Debrief collectif sur les apprentissages."
 ],
-transfer: "Améliore la capacité d'apprentissage et l'adaptation en formation"
+transfer: "Améliore la capacité d'apprentissage et l’adaptation en formation."
 }
 ],
 "Orientation": [
 {
 title: "Mon Mini Magazine de Vie (Zine)",
-objective: "Faire émerger centres d'intérêt et valeurs",
+objective: "Faire émerger centres d’intérêt et valeurs.",
 skills: ["Personnalité", "Valorisation"],
 duration: "1h30",
-format: "Créatif individuel",
+format: "Atelier créatif individuel",
 steps: [
-"Découper/coller des images reflétant la vie souhaitée",
-"Structurer en 4 pages : moi / mes forces / ce que j'aime / où je veux aller",
-"Finaliser son magazine personnel",
-"Présentation optionnelle au groupe"
+"Choisir des images/mots qui parlent de sa vie idéale.",
+"Structurer en 4 pages : moi / mes forces / ce que j’aime / vers où j’ai envie d’aller.",
+"Finaliser son mini-magazine.",
+"Option : présenter une page au groupe."
 ],
-transfer: "Clarifie le projet de vie et facilite les choix d'orientation"
+transfer: "Clarifie le projet de vie et facilite les choix d’orientation."
 }
 ],
 "Mobilité": [
 {
-title: "Moi en Déplacement : choix & conséquences",
-objective: "Comprendre l'impact de la mobilité",
+title: "Moi en déplacement : choix & conséquences",
+objective: "Comprendre l’impact de la mobilité sur le projet.",
 skills: ["Ressources", "Organisation"],
 duration: "45 min",
 format: "Simulation pratique",
 steps: [
-"Choisir un scénario : 'aller au travail', 'aller en formation', 'aller voir quelqu'un important'",
-"Identifier les solutions possibles de transport",
-"Calculer le coût de chaque solution",
-"Analyser les difficultés potentielles",
-"Définir sa prochaine étape mobilité concrète"
+"Choisir un scénario : aller au travail, en formation, à un rendez-vous important.",
+"Identifier au moins 2 solutions de transport possibles.",
+"Estimer le temps et le coût de chaque solution.",
+"Repérer les difficultés possibles et les solutions associées.",
+"Choisir une prochaine étape concrète pour sa mobilité."
 ],
-transfer: "Facilite l'accès à l'emploi et à la formation en anticipant les contraintes"
+transfer: "Facilite l’accès à l’emploi et à la formation en anticipant les trajets."
 }
 ],
 "Santé": [
 {
 title: "Mon Stressomètre",
-objective: "Repérer signes de stress + créer un plan d'apaisement",
+objective: "Repérer ses signaux de stress et créer un kit apaisement.",
 skills: ["Bien-être", "Personnalité"],
 duration: "1h",
-format: "Auto-évaluation + création d'outils",
+format: "Auto-évaluation + mise en pratique",
 steps: [
-"Auto-évaluation de son niveau de stress actuel",
-"Identifier son profil : zen / pressuré / en alerte",
-"Repérer ses signaux personnels de stress",
-"Élaborer son 'kit apaisement' personnalisé",
-"Tester une technique d'apaisement immédiatement"
+"Se situer sur un stressomètre simple (calme / sous pression / en alerte).",
+"Identifier ses signaux (corporels, émotions, pensées).",
+"Lister ce qui aide déjà à se calmer.",
+"Construire son « kit apaisement » (3 actions concrètes).",
+"Tester une technique d’apaisement durant l’atelier."
 ],
-transfer: "Améliore la performance en entretien et la gestion du quotidien"
+transfer: "Aide à gérer les entretiens, la formation et le quotidien."
 }
 ],
 "Logement": [
 {
 title: "Mon Budget Logement",
-objective: "Visualiser le coût de la vie autonome",
+objective: "Visualiser le coût d’un logement autonome.",
 skills: ["Ressources"],
 duration: "45 min",
 format: "Calcul pratique",
 steps: [
-"Rechercher et calculer le coût d'un logement réel dans sa zone",
-"Lister toutes les charges associées (électricité, internet, assurance...)",
-"Comparer le coût total avec ses ressources actuelles/futures",
-"Identifier les ajustements possibles (colocation, aides, zone géographique)",
-"Définir un plan d'action logement réaliste"
+"Trouver un exemple de logement réaliste dans sa zone.",
+"Lister toutes les charges associées (loyer, énergie, internet, assurance…).",
+"Comparer avec ses ressources actuelles ou futures.",
+"Repérer des pistes : colocation, aides, autre secteur géographique.",
+"Formuler une étape logement réaliste à court terme."
 ],
-transfer: "Prépare l'autonomie et sécurise les conditions de vie pour l'insertion"
+transfer: "Prépare l’autonomie et sécurise les conditions de vie."
 }
 ],
 "Citoyenneté": [
 {
 title: "Ma Carte de Soutien",
-objective: "Identifier son réseau d'aide",
+objective: "Identifier son réseau d’aide.",
 skills: ["Valorisation", "Personnalité"],
 duration: "1h",
-format: "Cartographie + action",
+format: "Cartographie + plan d’action",
 steps: [
-"Dessiner son réseau actuel (famille, amis, professionnels, institutions)",
-"Ajouter les personnes positives et ressources",
-"Identifier ses besoins d'aide actuels et futurs",
-"Repérer les manques dans son réseau",
-"Action concrète : contacter 1 personne ressource cette semaine"
+"Dessiner les personnes / lieux ressources autour de soi.",
+"Mettre en avant les personnes positives, les lieux « safe ».",
+"Identifier les besoins d’aide actuels.",
+"Repérer les manques dans le réseau.",
+"Choisir une personne à contacter dans la semaine."
 ],
-transfer: "Facilite l'accès aux opportunités et au soutien dans l'insertion"
+transfer: "Facilite l’accès au soutien et aux opportunités."
 }
 ],
 "Finances": [
 {
 title: "Du Brut au Net",
-objective: "Comprendre salaire + gérer budget",
+objective: "Comprendre le salaire et poser un budget simple.",
 skills: ["Ressources"],
 duration: "1h",
-format: "Simulation + planification",
+format: "Simulation + discussion",
 steps: [
-"Simuler un salaire net à partir d'un salaire brut (charges sociales, impôts)",
-"Lister toutes les dépenses essentielles mensuelles",
-"Calculer le reste à vivre après les charges obligatoires",
-"Construire un budget équilibré et réaliste",
-"Identifier les marges de manœuvre et d'épargne"
+"Simuler un salaire net à partir d’un brut.",
+"Lister les dépenses de base (logement, transports, alimentation…).",
+"Calculer le reste à vivre.",
+"Discuter des priorités et marges de manœuvre.",
+"Identifier une première action pour mieux suivre son argent."
 ],
-transfer: "Prépare à la négociation salariale et à l'autonomie financière"
+transfer: "Prépare l’autonomie financière et la négociation salariale."
 }
 ],
 "Loisirs": [
 {
 title: "Mes Boosters de Bien-Être",
-objective: "Identifier activités qui donnent de l'énergie",
+objective: "Repérer ce qui fait du bien au quotidien.",
 skills: ["Bien-être"],
 duration: "30 min",
 format: "Réflexion + planification",
 steps: [
-"Lister 'Ce qui me fait du bien' (activités, lieux, personnes)",
-"Sélectionner 3 activités faciles à mettre en place",
-"Vérifier la faisabilité (coût, temps, accessibilité)",
-"Inscrire ces activités dans un planning hebdomadaire",
-"S'engager sur une première action dans les 48h"
+"Lister les activités, lieux et personnes qui font du bien.",
+"Choisir 2–3 actions simples à intégrer dans la semaine.",
+"Vérifier la faisabilité (temps, coût, transport).",
+"Inscrire ces moments dans un planning ou agenda.",
+"S’engager sur une première action dans les 48h."
 ],
-transfer: "Améliore l'équilibre vie pro/perso et maintient la motivation"
+transfer: "Aide à garder l’énergie et la motivation dans le parcours."
 }
 ],
 "Numérique": [
 {
 title: "Mon Image en Ligne",
-objective: "Maîtriser identité numérique",
+objective: "Faire le point sur son identité numérique.",
 skills: ["Valorisation", "Ressources"],
 duration: "1h",
-format: "Audit + création",
+format: "Audit + mise à jour",
 steps: [
-"Google test : rechercher son nom et voir ce qui apparaît",
-"Audit de ses profils sur les réseaux sociaux",
-"Nettoyage rapide (photos inappropriées, statuts problématiques)",
-"Création ou amélioration d'un profil professionnel simple",
-"Définir sa stratégie de présence en ligne"
+"Chercher son prénom/nom sur internet et regarder ce qui apparaît.",
+"Faire le tour de ses principaux profils (photos, bio, publications).",
+"Nettoyer ce qui ne correspond plus à l’image souhaitée.",
+"Créer ou mettre à jour un profil à visée pro simple.",
+"Définir 2–3 règles pour sa présence en ligne."
 ],
-transfer: "Évite les écueils en recrutement et valorise son profil professionnel"
+transfer: "Sécurise l’image auprès des employeurs et partenaires."
 }
 ],
 "Mode de vie": [
 {
 title: "Ma Routine Qui Me Fait du Bien",
-objective: "Créer un mode de vie stable",
+objective: "Installer un rythme plus stable.",
 skills: ["Personnalité", "Bien-être"],
 duration: "45 min",
 format: "Analyse + construction",
 steps: [
-"Identifier ses habitudes actuelles positives et négatives",
-"Choisir 1 changement utile et réalisable",
-"Construire un plan quotidien simple et stable",
-"Définir des indicateurs de réussite",
-"Prévoir les obstacles et solutions de contournement"
+"Repérer ses habitudes actuelles (sommeil, écrans, repas, sorties…).",
+"Choisir un petit changement prioritaire.",
+"Construire une mini-routine réaliste.",
+"Prévoir les obstacles possibles et comment les contourner.",
+"Fixer un point de bilan avec le conseiller."
 ],
-transfer: "Améliore la régularité et l'efficacité dans les démarches d'insertion"
+transfer: "Aide à tenir dans la durée les démarches d’insertion."
 }
 ]
 };
@@ -1632,7 +1558,8 @@ let allAssessments = [];
 const defaultConfig = {
 tool_title: "Diagnostic Life Skills",
 organization_name: "Mission Locale Edition",
-instructions_text: "Ce diagnostic vous permettra d'identifier vos forces et vos besoins dans 11 domaines essentiels à votre insertion sociale et professionnelle."
+instructions_text:
+"Ce diagnostic repère les forces et les besoins d’un jeune dans 11 domaines de vie. Il sert de support au Repérage / Premier Entretien."
 };
 
 const dataHandler = {
@@ -1643,86 +1570,9 @@ displaySavedAssessments();
 }
 };
 
-// --- GESTION LOCALSTORAGE ---
-
-const StorageManager = {
-key: "ls4you_diag_v1",
-
-getStored() {
-try {
-const raw = localStorage.getItem(this.key);
-if (!raw) return null;
-return JSON.parse(raw);
-} catch (e) {
-console.error("Erreur lecture localStorage", e);
-return null;
-}
-},
-
-showBannerIfAny() {
-const data = this.getStored();
-if (!data) return;
-
-const banner = document.getElementById('lastAssessmentBanner');
-const nameEl = document.getElementById('lastAssessmentName');
-const dateEl = document.getElementById('lastAssessmentDate');
-
-banner.style.display = 'block';
-nameEl.textContent = data.participant_name || "Jeune non nommé"
-dateEl.textContent = data.assessment_date
-? "Diagnostic local du " + new Date(data.assessment_date).toLocaleString('fr-FR')
-: ""
-},
-
-saveToLocal() {
-try {
-const participantName = document.getElementById('participantName').value.trim();
-if (!participantName) {
-showInlineMessage("Renseignez le nom du jeune avant de sauvegarder en local.", "warning");
-return;
-}
-
-const { domainScores, lifeSkillsScores } = computeScores();
-const payload = {
-participant_name: participantName,
-assessment_date: new Date().toISOString(),
-responses,
-domain_scores: domainScores,
-life_skills_scores: lifeSkillsScores
-};
-
-localStorage.setItem(this.key, JSON.stringify(payload));
-this.showBannerIfAny();
-showInlineMessage("Diagnostic sauvegardé sur cet appareil (localStorage).", "success");
-} catch (e) {
-console.error(e);
-showInlineMessage("Impossible de sauvegarder en local (navigateur).", "error");
-}
-},
-
-loadLastAssessment() {
-const data = this.getStored();
-if (!data) {
-showInlineMessage("Aucun diagnostic local trouvé.", "warning");
-return;
-}
-try {
-document.getElementById('participantName').value = data.participant_name || ""
-responses = data.responses || {};
-showResults();
-showStep('step-results');
-showInlineMessage("Dernier diagnostic local rechargé.", "success");
-} catch (e) {
-console.error(e);
-showInlineMessage("Erreur lors du rechargement du diagnostic local.", "error");
-}
-}
-};
-
-// --- INITIALISATION ---
+// --- INIT SDK / CONFIG ---
 
 async function initializeApp() {
-try {
 if (window.dataSdk) {
 const initResult = await window.dataSdk.init(dataHandler);
 if (!initResult.isOk) {
@@ -1735,17 +1585,20 @@ await window.elementSdk.init({
 defaultConfig,
 onConfigChange: async (config) => {
 const toolTitle = config.tool_title || defaultConfig.tool_title;
-const orgName = config.organization_name || defaultConfig.organization_name;
-const instructions = config.instructions_text || defaultConfig.instructions_text;
+const orgName =
+config.organization_name || defaultConfig.organization_name;
+const instructions =
+config.instructions_text || defaultConfig.instructions_text;
 
-document.getElementById('toolTitle').textContent = toolTitle;
-document.getElementById('organizationName').textContent = orgName;
-document.getElementById('instructionsText').textContent = instructions;
+document.getElementById("toolTitle").textContent = toolTitle;
+document.getElementById("organizationName").textContent = orgName;
+document.getElementById("instructionsText").textContent =
+instructions;
 },
 mapToCapabilities: (config) => ({
 recolorables: [
 {
-get: () => config.primary_color || "#2897d5",
+get: () => config.primary_color || "#f39200",
 set: (value) => {
 if (window.elementSdk) {
 window.elementSdk.setConfig({ primary_color: value });
@@ -1753,7 +1606,7 @@ window.elementSdk.setConfig({ primary_color: value });
 }
 },
 {
-get: () => config.secondary_color || "#f39200",
+get: () => config.secondary_color || "#2897d5",
 set: (value) => {
 if (window.elementSdk) {
 window.elementSdk.setConfig({ secondary_color: value });
@@ -1763,7 +1616,7 @@ window.elementSdk.setConfig({ secondary_color: value });
 ],
 borderables: [],
 fontEditable: {
-get: () => config.font_family || "Poppins",
+get: () => config.font_family || "system-ui",
 set: (value) => {
 if (window.elementSdk) {
 window.elementSdk.setConfig({ font_family: value });
@@ -1779,140 +1632,198 @@ window.elementSdk.setConfig({ font_size: value });
 }
 }
 }),
-mapToEditPanelValues: (config) => new Map([
+mapToEditPanelValues: (config) =>
+new Map([
 ["tool_title", config.tool_title || defaultConfig.tool_title],
-["organization_name", config.organization_name || defaultConfig.organization_name],
-["instructions_text", config.instructions_text || defaultConfig.instructions_text]
+[
+"organization_name",
+config.organization_name || defaultConfig.organization_name
+],
+[
+"instructions_text",
+config.instructions_text || defaultConfig.instructions_text
+]
 ])
 });
 }
-} catch (e) {
-console.error("Erreur d'initialisation globale", e);
 }
 
-StorageManager.showBannerIfAny();
+// --- RATING LABELS SIMPLIFIÉS ---
+
+function getRatingLabel(value) {
+const labels = {
+1: "🙈 Pas encore",
+2: "🙂 Un peu",
+3: "💪 Plutôt oui",
+4: "🌟 Tout à fait"
+};
+return labels[value];
 }
 
-// --- AFFICHAGE DES DIAGNOSTICS SAUVEGARDES (BACKEND) ---
+function updateRatingSelection(questionId, value) {
+responses[questionId] = value;
+// rafraîchit l’état visuel
+const radios = document.querySelectorAll(
+`input[name="${questionId}"]`
+);
+radios.forEach((input) => {
+const parent = input.closest(".rating-option");
+if (!parent) return;
+if (Number(input.value) === value && input.checked) {
+parent.classList.add("selected");
+} else {
+parent.classList.remove("selected");
+}
+});
+updateNavigationButtons();
+}
+
+// --- AFFICHAGE DIAGNOSTICS SAUVEGARDÉS (SDK) ---
 
 function displaySavedAssessments() {
-const container = document.getElementById('savedAssessments');
-const list = document.getElementById('assessmentsList');
+const container = document.getElementById("savedAssessments");
+const list = document.getElementById("assessmentsList");
 
 if (!allAssessments || allAssessments.length === 0) {
-container.style.display = 'none';
+container.style.display = "none"
 return;
 }
 
-container.style.display = 'block';
-list.innerHTML = '';
+container.style.display = "block"
+list.innerHTML = ""
 
-allAssessments.forEach(assessment => {
-const item = document.createElement('div');
-item.className = 'assessment-item';
+allAssessments.forEach((assessment) => {
+const item = document.createElement("div");
+item.className = "assessment-item"
 
 const date = new Date(assessment.assessment_date);
-const formattedDate = date.toLocaleDateString('fr-FR') + " " + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+const formattedDate = date.toLocaleDateString("fr-FR");
 
 item.innerHTML = `
 <div class="assessment-info">
 <div class="assessment-name">${assessment.participant_name}</div>
 <div class="assessment-date">Diagnostic du ${formattedDate}</div>
 </div>
-<button class="btn btn-secondary btn-small" type="button"
+<button class="btn btn-small btn-secondary"
+type="button"
 onclick="viewAssessment('${assessment.__backendId}')">
-Voir la synthèse
+Voir
 </button>
 `;
-
 list.appendChild(item);
 });
 }
 
 function viewAssessment(assessmentId) {
-const assessment = allAssessments.find(a => a.__backendId === assessmentId);
+const assessment = allAssessments.find(
+(a) => a.__backendId === assessmentId
+);
 if (!assessment) return;
 
-try {
-responses = JSON.parse(assessment.domain_scores) || {};
-} catch {
-responses = {};
-}
-
+responses = JSON.parse(assessment.domain_scores);
 showResults();
-showStep('step-results');
+showStep("step-results");
 }
 
-// --- PARCOURS QUESTIONNAIRE ---
+// --- LOCALSTORAGE ---
 
-function startAssessment() {
-const name = document.getElementById('participantName').value.trim();
-if (!name) {
-showInlineMessage("Veuillez saisir le prénom et nom du jeune pour commencer.", "warning");
+function saveLocalAssessment(payload) {
+try {
+localStorage.setItem("ls4you_diag_last", JSON.stringify(payload));
+} catch (e) {
+console.warn("Impossible de sauvegarder dans le navigateur", e);
+}
+}
+
+function loadLocalAssessment() {
+try {
+const raw = localStorage.getItem("ls4you_diag_last");
+if (!raw) {
+showInlineMessage(
+"Aucun diagnostic enregistré sur cet appareil.",
+"warning"
+);
 return;
 }
+const data = JSON.parse(raw);
+responses = data.responses || {};
+document.getElementById("participantName").value =
+data.participant_name || ""
+showResults();
+showStep("step-results");
+showInlineMessage(
+"Dernier diagnostic chargé depuis cet appareil.",
+"success"
+);
+} catch (e) {
+showInlineMessage("Erreur lors du chargement local.", "error");
+}
+}
 
+// --- FLUX DIAGNOSTIC ---
+
+function startAssessment() {
+const name = document
+.getElementById("participantName")
+.value.trim();
+if (!name) {
+showInlineMessage("Merci de renseigner le prénom et le nom.", "warning");
+return;
+}
 currentDomain = 0;
 responses = {};
 generateQuestions();
-showStep('step-assessment');
+showStep("step-assessment");
 updateProgress();
 updateNavigationButtons();
 }
 
 function generateQuestions() {
-const container = document.getElementById('questionsContainer');
-container.innerHTML = '';
+const container = document.getElementById("questionsContainer");
+container.innerHTML = ""
 
 domains.forEach((domain, domainIndex) => {
-const domainDiv = document.createElement('section');
-domainDiv.className = 'domain-section';
+const domainDiv = document.createElement("div");
+domainDiv.className = "domain-section"
 domainDiv.id = `domain-${domainIndex}`;
-domainDiv.style.display = domainIndex === 0 ? 'block' : 'none';
-domainDiv.setAttribute('aria-label', `Domaine ${domain.name}`);
-
-const questionCount = domain.questions.length;
+domainDiv.style.display = domainIndex === 0 ? "block" : "none"
 
 domainDiv.innerHTML = `
-<div class="domain-header-row">
 <div class="domain-title">
 <span class="domain-icon">${domain.icon}</span>
 ${domain.name}
 </div>
-<div class="domain-chip">${questionCount} question(s)</div>
+<div class="domain-objective">
+<strong>Objectif :</strong> ${domain.objective}
 </div>
-<p class="domain-objective"><strong>Objectif :</strong> ${domain.objective}</p>
 `;
 
 domain.questions.forEach((question, questionIndex) => {
+const questionDiv = document.createElement("div");
+questionDiv.className = "question"
 const questionId = `q_${domainIndex}_${questionIndex}`;
-const questionDiv = document.createElement('div');
-questionDiv.className = 'question';
+
+const optionsHtml = [1, 2, 3, 4]
+.map(
+(value) => `
+<label class="rating-option" data-value="${value}">
+<input
+type="radio"
+name="${questionId}"
+value="${value}"
+aria-label="${getRatingLabel(value)}"
+onchange="updateRatingSelection('${questionId}', ${value})"
+>
+<span class="rating-label">${getRatingLabel(value)}</span>
+</label>
+`
+)
+.join("");
 
 questionDiv.innerHTML = `
-<div class="question-text-row">
-<div class="question-text">
-${question}
-</div>
-<div class="question-tooltip" title="Répondez en fonction de votre situation actuelle, pas de ce que vous pensez devoir répondre.">
-❓
-</div>
-</div>
-<div class="rating-scale" role="radiogroup"
-aria-label="Échelle de 1 à 4 pour la question : ${question}">
-${[1,2,3,4].map(value => {
-const { main, sub } = getRatingLabelsDetailed(value);
-return `
-<label class="rating-option"
-data-value="${value}"
-onclick="selectRating('${questionId}', ${value}, this)"
-aria-label="${main} - ${sub}">
-<input type="radio" name="${questionId}" value="${value}">
-<span class="rating-label-main">${main}</span>
-<span class="rating-label-sub">${sub}</span>
-</label>
-`;
-}).join('')}
+<div class="question-text">${question}</div>
+<div class="rating-scale" role="radiogroup" aria-label="${question}">
+${optionsHtml}
 </div>
 `;
 domainDiv.appendChild(questionDiv);
@@ -1922,103 +1833,102 @@ container.appendChild(domainDiv);
 });
 }
 
-function getRatingLabelsDetailed(value) {
-if (value === 1) return { main: "🔴 Zone de défi", sub: "C'est difficile pour moi" };
-if (value === 2) return { main: "🟡 En progression", sub: "J'y arrive parfois" };
-if (value === 3) return { main: "🟢 Plutôt au point", sub: "Je me débrouille bien" };
-return { main: "⭐ C'est mon fort", sub: "Je maîtrise vraiment" };
-}
-
-function selectRating(questionId, value, labelEl) {
-responses[questionId] = value;
-
-const group = labelEl.parentElement;
-Array.from(group.children).forEach(child => child.classList.remove('selected'));
-labelEl.classList.add('selected');
-
-updateNavigationButtons();
-}
-
 function updateNavigationButtons() {
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
 
-prevBtn.style.display = currentDomain > 0 ? 'inline-flex' : 'none';
+prevBtn.style.display = currentDomain > 0 ? "inline-flex" : "none"
 
 if (currentDomain === domains.length - 1) {
-const allAnswered = domainFullyAnswered(currentDomain);
-nextBtn.textContent = 'Voir la synthèse';
+const allAnswered = domains[currentDomain].questions.every(
+(_, qIndex) =>
+responses[`q_${currentDomain}_${qIndex}`] !== undefined
+);
+nextBtn.textContent = allAnswered
+? "Voir mes résultats"
+: "Terminer"
 nextBtn.disabled = !allAnswered;
 } else {
-nextBtn.textContent = 'Suivant ➡️';
+nextBtn.textContent = "Suivant ▶️"
 nextBtn.disabled = false;
 }
 }
 
-function domainFullyAnswered(domainIndex) {
-return domains[domainIndex].questions.every((_, qIndex) =>
-responses[`q_${domainIndex}_${qIndex}`] !== undefined
-);
-}
-
 function nextDomain() {
-if (!domainFullyAnswered(currentDomain)) {
-showInlineMessage("Répondez à toutes les questions du domaine avant de continuer.", "warning");
+if (currentDomain < domains.length - 1) {
+const allAnswered = domains[currentDomain].questions.every(
+(_, qIndex) =>
+responses[`q_${currentDomain}_${qIndex}`] !== undefined
+);
+if (!allAnswered) {
+showInlineMessage(
+"Merci de répondre à toutes les phrases du domaine avant de continuer.",
+"warning"
+);
 return;
 }
-
-if (currentDomain < domains.length - 1) {
-document.getElementById(`domain-${currentDomain}`).style.display = 'none';
+document.getElementById(
+`domain-${currentDomain}`
+).style.display = "none"
 currentDomain++;
-document.getElementById(`domain-${currentDomain}`).style.display = 'block';
+document.getElementById(
+`domain-${currentDomain}`
+).style.display = "block"
 updateProgress();
 updateNavigationButtons();
 } else {
 showResults();
-showStep('step-results');
+showStep("step-results");
 }
 }
 
 function previousDomain() {
 if (currentDomain > 0) {
-document.getElementById(`domain-${currentDomain}`).style.display = 'none';
+document.getElementById(
+`domain-${currentDomain}`
+).style.display = "none"
 currentDomain--;
-document.getElementById(`domain-${currentDomain}`).style.display = 'block';
+document.getElementById(
+`domain-${currentDomain}`
+).style.display = "block"
 updateProgress();
 updateNavigationButtons();
 }
 }
 
 function updateProgress() {
-const progress = ((currentDomain + 1) / domains.length) * 100;
-document.getElementById('progressFill').style.width = `${progress}%`;
+const progress =
+((currentDomain + 1) / domains.length) * 100;
+document.getElementById(
+"progressFill"
+).style.width = `${progress}%`;
 }
 
-// --- CALCUL SCORES & AFFICHAGE ---
+// --- CALCUL & AFFICHAGE RÉSULTATS ---
 
-function computeScores() {
+function showResults() {
 const domainScores = {};
 domains.forEach((domain, domainIndex) => {
-const domainResponses = domain.questions.map((_, qIndex) =>
+const domainResponses = domain.questions.map(
+(_, qIndex) =>
 responses[`q_${domainIndex}_${qIndex}`] || 0
 );
-const average = domainResponses.reduce((a, b) => a + b, 0) / domainResponses.length;
+const average =
+domainResponses.reduce((a, b) => a + b, 0) /
+domainResponses.length;
 domainScores[domain.name] = Math.round((average / 4) * 100);
 });
 
 const lifeSkillsScores = {};
-Object.keys(lifeSkillsMapping).forEach(skill => {
+Object.keys(lifeSkillsMapping).forEach((skill) => {
 const relatedDomains = lifeSkillsMapping[skill];
-const scores = relatedDomains.map(domainName => domainScores[domainName] ?? 0);
-const average = scores.reduce((a, b) => a + b, 0) / scores.length;
+const scores = relatedDomains.map(
+(domainName) => domainScores[domainName]
+);
+const average =
+scores.reduce((a, b) => a + b, 0) / scores.length;
 lifeSkillsScores[skill] = Math.round(average);
 });
-
-return { domainScores, lifeSkillsScores };
-}
-
-function showResults() {
-const { domainScores, lifeSkillsScores } = computeScores();
 
 displayLifeSkillsResults(lifeSkillsScores);
 displayDomainResults(domainScores);
@@ -2027,12 +1937,11 @@ displayActionPlan(domainScores);
 }
 
 function displayLifeSkillsResults(scores) {
-const container = document.getElementById('lifeSkillsResults');
-container.innerHTML = '';
-
+const container = document.getElementById("lifeSkillsResults");
+container.innerHTML = ""
 Object.entries(scores).forEach(([skill, score]) => {
-const card = document.createElement('div');
-card.className = 'skill-card';
+const card = document.createElement("div");
+card.className = "skill-card"
 card.innerHTML = `
 <div class="skill-name">${skill}</div>
 <div class="skill-score">${score}%</div>
@@ -2042,27 +1951,15 @@ container.appendChild(card);
 }
 
 function displayDomainResults(scores) {
-const container = document.getElementById('domainResults');
-container.innerHTML = '';
-
+const container = document.getElementById("domainResults");
+container.innerHTML = ""
 Object.entries(scores).forEach(([domain, score]) => {
-const bar = document.createElement('div');
-bar.className = 'domain-bar';
-
-const color = score < 40
-? 'linear-gradient(90deg, #b91c1c, #ef4444)'
-: score < 60
-? 'linear-gradient(90deg, #f97316, #facc15)'
-: score < 80
-? 'linear-gradient(90deg, #22c55e, #4ade80)'
-: 'linear-gradient(90deg, #2563eb, #38bdf8)';
-
+const bar = document.createElement("div");
+bar.className = "domain-bar"
 bar.innerHTML = `
 <div class="domain-bar-name">${domain}</div>
 <div class="bar-container">
-<div class="bar-fill" style="width:${score}%; background:${color};">
-${score}%
-</div>
+<div class="bar-fill" style="width: ${score}%">${score}%</div>
 </div>
 `;
 container.appendChild(bar);
@@ -2071,130 +1968,174 @@ container.appendChild(bar);
 
 function displayPriorityAreas(scores) {
 const lowScoreAreas = Object.entries(scores)
-.filter(([_, score]) => score < 60)
+.filter(([, score]) => score < 60)
 .sort((a, b) => a[1] - b[1])
 .map(([domain, score]) => ({ domain, score }));
 
-const container = document.getElementById('priorityAreas');
+const container = document.getElementById("priorityAreas");
 
 if (lowScoreAreas.length === 0) {
 container.innerHTML = `
-<div class="priority-title">🎉 Aucun domaine en alerte</div>
-<p>Vous avez des scores satisfaisants dans tous les domaines. Le conseiller peut cibler 1 à 2 domaines à renforcer en fonction du projet.</p>
+<div class="priority-title">🎉 Tout est plutôt bien équilibré</div>
+<p>Tu n’as pas de gros signaux d’alerte sur un domaine en particulier.</p>
+<p><strong>Avec ton conseiller :</strong> vous pouvez choisir ensemble 1 à 2 domaines à renforcer encore.</p>
 `;
-} else {
+return;
+}
+
 container.innerHTML = `
-<div class="priority-title">🎯 Sélection des 1 à 3 domaines prioritaires</div>
-<p>Choisissez avec le jeune les domaines à travailler en priorité :</p>
-<div style="margin-top: 6px;">
-${lowScoreAreas.map(({domain, score}) => `
-<label style="display:block; margin:4px 0; padding:6px 8px; border-radius:10px; background:#ffffff; border:1px solid #e5e7eb; cursor:pointer;">
+<div class="priority-title">🎯 Choisir 1 à 3 domaines prioritaires</div>
+<p>Voici les domaines où tu pourrais concentrer tes efforts en premier :</p>
+<div style="margin: 8px 0 4px;">
+${lowScoreAreas
+.map(
+({ domain, score }) => `
+<label>
 <input type="checkbox" name="priority" value="${domain}"
-style="margin-right:8px;"
 onchange="updatePrioritySelection()">
 <strong>${domain}</strong> – ${score}%
 </label>
-`).join('')}
+`
+)
+.join("")}
 </div>
-<div id="selectedPriorities" class="selected-priorities"></div>
+<p><em>Tu peux cocher les domaines que tu souhaites travailler en priorité avec ton conseiller.</em></p>
+<div id="selectedPriorities"></div>
 `;
-}
 }
 
 function updatePrioritySelection() {
-const checkboxes = document.querySelectorAll('input[name="priority"]:checked');
-const selected = Array.from(checkboxes).map(cb => cb.value);
-const display = document.getElementById('selectedPriorities');
-
+const checkboxes = document.querySelectorAll(
+'input[name="priority"]:checked'
+);
+let selected = Array.from(checkboxes).map((cb) => cb.value);
 if (selected.length > 3) {
 checkboxes[checkboxes.length - 1].checked = false;
-selected.pop();
+selected = selected.slice(0, 3);
 }
-
+const display = document.getElementById("selectedPriorities");
 if (selected.length > 0) {
-display.textContent = "✅ Domaines retenus : " + selected.join(", ");
+display.textContent =
+"✅ Domaines choisis : " + selected.join(", ");
 } else {
 display.textContent = ""
 }
 }
 
+function displayActionPlan(scores) {
+const container = document.getElementById("actionPlan");
+const recommendations = generateRecommendations(scores);
+container.innerHTML = `
+<div class="action-title">📋 Pistes d’action à discuter</div>
+<div>${recommendations}</div>
+`;
+}
+
 function generateRecommendations(scores) {
 const lowScores = Object.entries(scores)
-.filter(([_, score]) => score < 60)
+.filter(([, score]) => score < 60)
 .sort((a, b) => a[1] - b[1]);
 
 if (lowScores.length === 0) {
 return `
-<p><strong>Maintien et développement :</strong></p>
+<p><strong>Maintien & consolidation :</strong></p>
 <ul>
-<li>Capitaliser sur les points forts du jeune (mentorat, tutorat, projets).</li>
-<li>Identifier 1 à 2 domaines à consolider en lien avec le projet professionnel.</li>
-<li>Programmer des points d'étape réguliers pour ajuster le parcours.</li>
+<li>Garder les habitudes qui fonctionnent déjà pour toi.</li>
+<li>Partager tes bonnes pratiques avec d’autres jeunes (atelier, témoignage…).</li>
+<li>Choisir, avec ton conseiller, 1 domaine à booster encore plus.</li>
 </ul>
 `;
 }
 
-const recommandations = {
-"Emploi": "Ateliers CV / lettre, simulation entretien, appui à la période d'essai.",
-"Formation": "Bilan de prérequis, accompagnement aux démarches de formation, sécurisation du rythme.",
-"Orientation": "Travail sur les intérêts / valeurs, immersion, rencontres métiers.",
-"Mobilité": "Diagnostic mobilité, solutions alternatives (covoiturage, prêt solidaire), appui permis.",
-"Santé": "Lien vers les partenaires santé, outils de gestion du stress, aménagements si besoin.",
-"Logement": "Orientation vers les dispositifs logement, accompagnement administratif, prévention ruptures.",
-"Citoyenneté": "Mobilisation sur des projets collectifs, valorisation des engagements, travail sur les droits.",
-"Finances": "Ateliers budget, médiation si dettes, repérage des aides mobilisables.",
-"Loisirs": "Mise en lien avec des structures locales, valorisation des centres d'intérêt.",
-"Numérique": "Appui aux démarches en ligne, ateliers compétences numériques de base.",
-"Mode de vie": "Travail sur les routines, les priorités, le sommeil et la gestion de l'énergie."
+const recommendations = {
+"Emploi":
+"Travailler ton pitch, ton CV et t’entraîner à des entretiens.",
+"Formation":
+"Explorer les formations possibles et voir les aides associées.",
+"Orientation":
+"Faire un point sur tes envies, tes essais, et tester des pistes.",
+"Mobilité":
+"Trouver des solutions de transport réalistes pour tes projets.",
+"Santé":
+"Mettre en place des routines simples pour prendre soin de toi, et repérer les pros ressources.",
+"Logement":
+"Voir avec les bons partenaires ce qui existe pour sécuriser ta situation.",
+"Citoyenneté":
+"Te connecter à des lieux, des projets ou des collectifs où tu peux t’exprimer.",
+"Finances":
+"Mettre à plat tes entrées/sorties d’argent et voir les aides mobilisables.",
+"Loisirs":
+"Protéger quelques temps « ressources » dans ta semaine.",
+"Numérique":
+"Sécuriser ton image en ligne et renforcer les bases des démarches numériques.",
+"Mode de vie":
+"Ajuster un peu ton rythme (sommeil, organisation, écrans) pour te sentir mieux."
 };
 
 return `
-<p><strong>Axes d'action conseillés :</strong></p>
+<p><strong>Idées à explorer :</strong></p>
 <ol>
-${lowScores.slice(0, 3).map(([domain, _]) =>
-`<li><strong>${domain}</strong> : ${recommandations[domain] || "À préciser avec le conseiller."}</li>`
-).join('')}
+${lowScores
+.slice(0, 3)
+.map(
+([domain]) =>
+`<li><strong>${domain}</strong> : ${
+recommendations[domain] ||
+"À travailler avec ton conseiller."
+}</li>`
+)
+.join("")}
 </ol>
-<p><em>À formaliser dans le mini-parcours (autonomie / entretiens / ateliers collectifs LS4YOU).</em></p>
+<p><em>Ces pistes sont à adapter avec ton conseiller, en fonction de ta réalité et de ton rythme.</em></p>
 `;
 }
 
-function displayActionPlan(scores) {
-const container = document.getElementById('actionPlan');
-const recommendations = generateRecommendations(scores);
-container.innerHTML = `
-<div class="action-title">📋 Pistes pour le mini-parcours d'accompagnement</div>
-${recommendations}
-`;
-}
-
-// --- SAUVEGARDE BACKEND ---
+// --- SAUVEGARDE (SDK + LOCAL) ---
 
 async function saveResults() {
+const saveBtn = document.getElementById("saveBtn");
+const loading = document.getElementById("loading");
+
 if (currentRecordCount >= 999) {
-showInlineMessage("Limite de 999 diagnostics atteinte. Supprimez d'anciens diagnostics si besoin.", "error");
+showInlineMessage(
+"Limite de 999 diagnostics atteinte. Merci de supprimer des anciens enregistrements.",
+"error"
+);
 return;
 }
-
-const saveBtn = document.getElementById('saveBtn');
-const loading = document.getElementById('loading');
-
-saveBtn.disabled = true;
-loading.style.display = 'block';
 
 try {
-const participantName = document.getElementById('participantName').value.trim();
-if (!participantName) {
-showInlineMessage("Nom du jeune manquant. Retournez à l'étape 1 si nécessaire.", "warning");
-saveBtn.disabled = false;
-loading.style.display = 'none';
-return;
-}
+saveBtn.disabled = true;
+loading.style.display = "block"
 
-const { domainScores, lifeSkillsScores } = computeScores();
+const participantName =
+document.getElementById("participantName").value || "Sans nom"
+
+const domainScores = {};
+domains.forEach((domain, domainIndex) => {
+const domainResponses = domain.questions.map(
+(_, qIndex) =>
+responses[`q_${domainIndex}_${qIndex}`] || 0
+);
+const average =
+domainResponses.reduce((a, b) => a + b, 0) /
+domainResponses.length;
+domainScores[domain.name] = Math.round((average / 4) * 100);
+});
+
+const lifeSkillsScores = {};
+Object.keys(lifeSkillsMapping).forEach((skill) => {
+const relatedDomains = lifeSkillsMapping[skill];
+const scores = relatedDomains.map(
+(domainName) => domainScores[domainName]
+);
+const average =
+scores.reduce((a, b) => a + b, 0) / scores.length;
+lifeSkillsScores[skill] = Math.round(average);
+});
 
 const priorityAreas = Object.entries(domainScores)
-.filter(([_, score]) => score < 60)
+.filter(([, score]) => score < 60)
 .map(([domain]) => domain);
 
 const assessmentData = {
@@ -2207,65 +2148,104 @@ action_plan: generateRecommendations(domainScores),
 completed: true
 };
 
+// Sauvegarde SDK (Epoc / backend)
 if (window.dataSdk) {
 const result = await window.dataSdk.create(assessmentData);
-if (result.isOk) {
-showInlineMessage("Diagnostic sauvegardé dans la base de données.", "success");
+if (!result.isOk) {
+showInlineMessage(
+"Erreur lors de la sauvegarde serveur. Les données locales sont conservées.",
+"error"
+);
 } else {
-showInlineMessage("Erreur lors de la sauvegarde en base. Vérifiez la connexion.", "error");
+showInlineMessage("Diagnostic sauvegardé.", "success");
 }
 } else {
-showInlineMessage("SDK de données non disponible. Impossible de sauvegarder en base.", "error");
+showInlineMessage(
+"Sauvegarde locale uniquement (pas de connexion au serveur).",
+"warning"
+);
 }
-} catch (error) {
-console.error(error);
-showInlineMessage("Erreur inattendue lors de la sauvegarde.", "error");
+
+// Sauvegarde locale
+saveLocalAssessment({
+participant_name: participantName,
+responses,
+domainScores,
+lifeSkillsScores,
+priorityAreas
+});
+} catch (e) {
+showInlineMessage(
+"Erreur lors de la sauvegarde. Merci de réessayer.",
+"error"
+);
 } finally {
 saveBtn.disabled = false;
-loading.style.display = 'none';
+loading.style.display = "none"
 }
 }
 
 function restartAssessment() {
 currentDomain = 0;
 responses = {};
-showStep('step-welcome');
-updateProgress();
+document.getElementById("participantName").value = ""
+showStep("step-welcome");
 }
 
+// --- ÉTAPES / NAV ---
+
 function showStep(stepId) {
-document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
-document.getElementById(stepId).classList.add('active');
+document
+.querySelectorAll(".step")
+.forEach((step) => step.classList.remove("active"));
+document.getElementById(stepId).classList.add("active");
+window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function showInlineMessage(message, type) {
-const div = document.createElement('div');
-div.className = `inline-message ${type}`;
-const icon = type === 'success' ? '✅'
-: type === 'error' ? '⚠️'
-: 'ℹ️';
-div.innerHTML = `<span class="icon">${icon}</span><span>${message}</span>`;
-document.body.appendChild(div);
-
+const msg = document.createElement("div");
+msg.className = `inline-message ${
+type === "error"
+? "error"
+: type === "warning"
+? "warning"
+: "success"
+}`;
+const icon =
+type === "error"
+? "⚠️"
+: type === "warning"
+? "ℹ️"
+: "✅"
+msg.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+document.body.appendChild(msg);
 setTimeout(() => {
-div.style.opacity = '0';
-setTimeout(() => {
-if (div.parentNode) div.parentNode.removeChild(div);
-}, 250);
-}, 3500);
+msg.remove();
+}, 3800);
 }
 
 // --- ACTIVITÉS ---
 
 function showActivities() {
-const { domainScores } = computeScores();
+const domainScores = {};
+domains.forEach((domain, domainIndex) => {
+const domainResponses = domain.questions.map(
+(_, qIndex) =>
+responses[`q_${domainIndex}_${qIndex}`] || 0
+);
+const average =
+domainResponses.reduce((a, b) => a + b, 0) /
+domainResponses.length;
+domainScores[domain.name] = Math.round((average / 4) * 100);
+});
 
 const priorityDomains = Object.entries(domainScores)
-.filter(([_, score]) => score < 60)
+.filter(([, score]) => score < 60)
 .sort((a, b) => a[1] - b[1])
 .map(([domain]) => domain);
 
-const domainsToShow = priorityDomains.length > 0
+const domainsToShow =
+priorityDomains.length > 0
 ? priorityDomains.slice(0, 3)
 : Object.entries(domainScores)
 .sort((a, b) => a[1] - b[1])
@@ -2273,49 +2253,50 @@ const domainsToShow = priorityDomains.length > 0
 .map(([domain]) => domain);
 
 displayActivities(domainsToShow, domainScores);
-showStep('step-activities');
+showStep("step-activities");
 }
 
 function displayActivities(priorityDomains, domainScores) {
-const container = document.getElementById('activitiesContainer');
-container.innerHTML = '';
+const container = document.getElementById("activitiesContainer");
+container.innerHTML = ""
 
-if (!priorityDomains || priorityDomains.length === 0) {
+if (priorityDomains.length === 0) {
 container.innerHTML = `
 <div class="activity-card">
-<h3>🎉 Aucun domaine prioritaire clairement identifié</h3>
-<p>Le diagnostic n'a pas fait ressortir de domaines en difficulté. Le conseiller peut sélectionner 1 à 2 activités LS4YOU en lien avec le projet du jeune.</p>
+<h3>🎉 Tu as déjà une bonne base dans tous les domaines</h3>
+<p>Avec ton conseiller, vous pouvez choisir 1 domaine à renforcer pour aller encore plus loin.</p>
 </div>
 `;
 return;
 }
 
-const intro = document.createElement('div');
-intro.className = 'activity-card';
+const intro = document.createElement("div");
+intro.className = "activity-card"
+intro.style.background = "#f3f8ff"
 intro.innerHTML = `
-<h3>🧩 Proposition de mini-parcours LS4YOU</h3>
-<p>Domaines en priorité (scores les plus bas) :</p>
-<div class="activity-meta">
-${priorityDomains.map(domain =>
-`<span class="meta-item">${domain} – ${domainScores[domain]}%</span>`
-).join('')}
+<h3>🎯 Activités proposées en priorité</h3>
+<p>Ces activités LS4YOU peuvent être mobilisées en individuel ou en collectif sur les domaines suivants :</p>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+${priorityDomains
+.map(
+(domain) => `
+<span class="meta-item">${domain} – ${domainScores[domain]}%</span>
+`
+)
+.join("")}
 </div>
-<p style="font-size:0.85rem; color:#4b5563;">
-Ces activités peuvent être combinées : 1 séance individuelle d'appui + 1 atelier collectif LS4YOU.
-</p>
 `;
 container.appendChild(intro);
 
-priorityDomains.forEach(domainName => {
+priorityDomains.forEach((domainName) => {
 const activities = domainActivities[domainName];
 if (!activities) return;
+const domainIcon =
+domains.find((d) => d.name === domainName)?.icon || "🎯"
 
-activities.forEach(activity => {
-const card = document.createElement('div');
-card.className = 'activity-card';
-
-const domainIcon = domains.find(d => d.name === domainName)?.icon || '🎯';
-
+activities.forEach((activity) => {
+const card = document.createElement("div");
+card.className = "activity-card"
 card.innerHTML = `
 <div class="activity-header">
 <div class="activity-icon">${domainIcon}</div>
@@ -2324,79 +2305,62 @@ card.innerHTML = `
 <p class="activity-subtitle">Domaine : ${domainName}</p>
 </div>
 </div>
-
-<p style="font-size:0.88rem; color:#374151;"><strong>Objectif :</strong> ${activity.objective}</p>
-
+<p><strong>Objectif :</strong> ${activity.objective}</p>
 <div class="skills-tags">
-${activity.skills.map(skill => `<span class="skill-tag">Life Skill : ${skill}</span>`).join('')}
+${activity.skills
+.map(
+(s) =>
+`<span class="skill-tag">Life Skill : ${s}</span>`
+)
+.join("")}
 </div>
-
 <div class="activity-meta">
 <div class="meta-item">⏱️ ${activity.duration}</div>
 <div class="meta-item">👥 ${activity.format}</div>
 </div>
-
 <div class="activity-steps">
-<h4>📋 Déroulé pédagogique (collectif ou individuel) :</h4>
+<h4>📋 Déroulé type :</h4>
 <ul class="step-list">
-${activity.steps.map(step => `<li class="step-item">${step}</li>`).join('')}
+${activity.steps
+.map((st) => `<li class="step-item">${st}</li>`)
+.join("")}
 </ul>
 </div>
-
 <div class="transfer-note">
-<div class="transfer-title">🔄 Transfert dans le parcours Mission Locale :</div>
+<div class="transfer-title">🔄 Transfert Mission Locale</div>
 <p>${activity.transfer}</p>
 </div>
 `;
-
 container.appendChild(card);
 });
 });
 
-const finalNote = document.createElement('div');
-finalNote.className = 'activity-card';
+const finalNote = document.createElement("div");
+finalNote.className = "activity-card"
+finalNote.style.background = "#f1fdf4"
 finalNote.innerHTML = `
-<h4 style="margin:0 0 4px 0;">💡 Pour le conseiller</h4>
-<p style="font-size:0.86rem; color:#4b5563;">
-Notez dans le suivi quel(s) format(s) ont été retenus : autonomie guidée (niveau 1),
-entretien (niveau 2), atelier collectif LS4YOU (niveau 3).
-</p>
+<h4>💡 À utiliser avec le conseiller</h4>
+<p>Ces activités peuvent être mobilisées :</p>
+<ul style="padding-left:18px;font-size:0.9rem;margin:4px 0 6px;">
+<li>en <strong>autonomie accompagnée</strong> (jeune + support papier/numérique) ;</li>
+<li>en <strong>entretien individuel</strong> (RPE, suivi, bilan) ;</li>
+<li>en <strong>atelier collectif</strong> Life Skills / projet / mobilisation.</li>
+</ul>
+<p>Le diagnostic permet de choisir ensemble quelles activités sont les plus pertinentes maintenant.</p>
 `;
 container.appendChild(finalNote);
 }
 
-// --- EXPORT JSON ---
+// --- EXPORT PDF (via impression navigateur) ---
 
-function exportToJSON() {
-try {
-const participantName = document.getElementById('participantName').value.trim();
-if (!participantName) {
-showInlineMessage("Renseignez le nom du jeune avant l'export.", "warning");
-return;
+function exportToPDF() {
+window.print();
 }
 
-const { domainScores, lifeSkillsScores } = computeScores();
-const payload = {
-participant_name: participantName,
-assessment_date: new Date().toISOString(),
-domain_scores: domainScores,
-life_skills_scores: lifeSkillsScores,
-responses
-};
+// --- INIT ---
 
-const panel = document.getElementById('exportPanel');
-const textarea = document.getElementById('exportData');
-textarea.value = JSON.stringify(payload, null, 2);
-panel.style.display = 'block';
-showInlineMessage("Export JSON généré. Vous pouvez le copier dans votre SI.", "success");
-} catch (e) {
-console.error(e);
-showInlineMessage("Impossible de générer l'export JSON.", "error");
-}
-}
-
-document.addEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener("DOMContentLoaded", initializeApp);
 </script>
-
 </body>
 </html>
+
